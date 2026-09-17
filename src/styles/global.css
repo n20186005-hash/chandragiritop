@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #10231d;
+  --pine: #193c31;
+  --moss: #69856a;
+  --mist: #eef3ee;
+  --snow: #f8faf7;
+  --rope: #b6422b;
+  --sun: #d7a332;
+}
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--snow); color: var(--ink); font-family: "Noto Sans Devanagari", "Nirmala UI", "Mangal", system-ui, sans-serif; }
+::selection { background: #d6e3d5; }
+.grid-noise { background-image: linear-gradient(rgba(16,35,29,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(16,35,29,.05) 1px, transparent 1px); background-size: 32px 32px; }
+.shadow-soft { box-shadow: 0 22px 70px rgba(16,35,29,.10); }
+.cable-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent); }

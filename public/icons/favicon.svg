@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Chandragiri cable car icon">
+  <rect width="64" height="64" rx="15" fill="#193c31"/>
+  <path d="M8 20 C23 15 41 14 56 18" fill="none" stroke="#eef3ee" stroke-width="3" stroke-linecap="round"/>
+  <path d="M31 17v8" stroke="#eef3ee" stroke-width="3" stroke-linecap="round"/>
+  <rect x="21" y="24" width="22" height="18" rx="6" fill="#b6422b" stroke="#eef3ee" stroke-width="2"/>
+  <path d="M14 49 27 37l6 6 7-7 12 13" fill="none" stroke="#d7a332" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

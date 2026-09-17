@@ -1,0 +1,270 @@
+---
+import '../styles/global.css';
+
+export const prerender = true;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const pagePath = '/';
+const canonical = siteUrl ? `${siteUrl}${pagePath}` : undefined;
+const ogImage = undefined;
+
+const place = {
+  name: 'चन्द्रागिरि केबल कार माथिल्लो स्टेसन',
+  address: 'M683+6V9, Kulekhani-Phakhel-Matatirtha Rd, Chandragiri, Bagmati Province 44600, Nepal',
+  latitude: 27.667243,
+  longitude: 85.205841,
+  rating: 4.5,
+  reviewCount: 10299,
+  phone: '+977 1-4312515'
+};
+
+const openingHours = [
+  ['सोमबार', '09:00–18:00'], ['मंगलबार', '09:00–18:00'], ['बुधबार', '09:00–18:00'],
+  ['बिहीबार', '09:00–18:00'], ['शुक्रबार', '09:00–18:00'], ['शनिबार', '08:00–18:00'], ['आइतबार', '08:00–18:00']
+];
+
+const faq = [
+  { q: 'केबल कारको यात्रा कति समय लाग्छ?', a: 'सामान्यतया करिब ९–१३ मिनेट लाग्छ। २.५ किमि लामो लाइनले थानकोटतर्फको तल्लो स्टेशनलाई चन्द्रागिरिको माथिल्लो स्टेशनसँग जोड्छ।' },
+  { q: 'कुन समयमा जानु राम्रो?', a: 'हिमालको दृश्य प्राथमिकता हो भने बिहानको सफा आकाश राम्रो हुन्छ। बादल, हावा वा मर्मतका कारण दृश्य र सञ्चालनमा असर पर्न सक्छ, त्यसैले निस्कनुअघि आधिकारिक सञ्चालन सूचना हेर्नुहोस्।' },
+  { q: 'माथि पुगेपछि के हेर्न सकिन्छ?', a: 'भालेश्वर महादेव मन्दिर, दृश्य टावर, काठमाडौँ उपत्यका र मौसम खुलेको दिन हिमालय शृङ्खलाको विस्तृत दृश्य मुख्य आकर्षण हुन्।' },
+  { q: 'बालबालिका र ह्वीलचेयर प्रयोगकर्ताका लागि उपयुक्त छ?', a: 'सञ्चालकका अनुसार ह्वीलचेयर प्रयोगकर्तालाई चढ्न/ओर्लन कर्मचारीले सहयोग गर्छन्। ११ वर्ष वा कम उमेरका बालबालिकासँग कम्तीमा १५ वर्षका साथीसँग यात्रा गर्नुपर्ने जानकारी पनि आधिकारिक FAQ मा दिइएको छ।' },
+  { q: 'कति समय छुट्याउने?', a: 'केबल कार, मन्दिर, दृश्य क्षेत्र र खानपान मिलाएर करिब ३–४ घण्टा सहज हुन्छ। मौसम राम्रो छ र गतिविधि थप्ने हो भने आधा दिन राख्नु उपयोगी हुन्छ।' }
+];
+
+const touristSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['TouristAttraction', 'LocalBusiness'],
+  name: place.name,
+  alternateName: 'Chandragiri Cable Car Top Station',
+  ...(canonical ? { url: canonical } : {}),
+  telephone: place.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'M683+6V9, Kulekhani-Phakhel-Matatirtha Rd',
+    addressLocality: 'Chandragiri',
+    addressRegion: 'Bagmati Province',
+    postalCode: '44600',
+    addressCountry: 'NP'
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: place.latitude, longitude: place.longitude },
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: place.rating, reviewCount: place.reviewCount },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '09:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday','Sunday'], opens: '08:00', closes: '18:00' }
+  ],
+  isAccessibleForFree: false
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map(({q,a}) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
+};
+---
+<!doctype html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>चन्द्रागिरि केबल कार माथिल्लो स्टेसन | यात्रा मार्गदर्शिका</title>
+  <meta name="description" content="चन्द्रागिरि केबल कार माथिल्लो स्टेसनको स्थानीय नेपाली यात्रा मार्गदर्शिका—टिकट, समय, यातायात, पार्किङ, भालेश्वर महादेव, खाना र मौसमअनुसार भ्रमण सुझाव।" />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="चन्द्रागिरि केबल कार माथिल्लो स्टेसन" />
+  <meta property="og:description" content="काठमाडौँ उपत्यकामाथिको केबल कार यात्रा, हिमाली दृश्य र भालेश्वर महादेवसम्मको व्यावहारिक यात्रा योजना।" />
+  {canonical && <meta property="og:url" content={canonical} />}
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta name="theme-color" content="#193c31" />
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+  <script type="application/ld+json" set:html={JSON.stringify(touristSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+</head>
+<body>
+  <header class="absolute inset-x-0 top-0 z-30">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8">
+      <a href="#top" aria-label="गृहपृष्ठ" class="rounded-2xl bg-white/92 p-2 shadow-soft backdrop-blur">
+        <img src="/logo.svg" alt="चन्द्रागिरि केबल कार लोगो" class="h-12 w-auto" width="300" height="72" />
+      </a>
+      <nav class="hidden gap-6 rounded-full border border-white/30 bg-[#10231d]/55 px-6 py-3 text-sm font-semibold text-white backdrop-blur md:flex">
+        <a href="#plan">यात्रा योजना</a><a href="#tickets">टिकट</a><a href="#nearby">वरिपरि</a><a href="#map">नक्सा</a><a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="relative min-h-[92vh] overflow-hidden bg-[#193c31] text-white">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/View_from_chandragiri_32.jpg/1600px-View_from_chandragiri_32.jpg" alt="चन्द्रागिरि हिलको केबल कार माथिल्लो स्टेशन" class="absolute inset-0 h-full w-full object-cover opacity-70" />
+      <div class="absolute inset-0 bg-gradient-to-r from-[#10231d]/95 via-[#10231d]/62 to-transparent"></div>
+      <div class="absolute inset-x-0 top-[26%] cable-line"></div>
+      <div class="relative mx-auto flex min-h-[92vh] max-w-7xl items-end px-5 pb-16 pt-36 md:px-8 md:pb-24">
+        <div class="max-w-4xl">
+          <div class="mb-5 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm backdrop-blur">
+            <span class="h-2 w-2 rounded-full bg-[#d7a332]"></span> चन्द्रागिरि • बागमती • नेपाल
+          </div>
+          <h1 class="max-w-4xl text-5xl font-black leading-[1.05] tracking-tight md:text-7xl">केबल कारबाट<br/><span class="text-[#f1c75b]">बादलमाथि</span> चन्द्रागिरि</h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-white/85 md:text-xl">२,५२० मिटर उचाइको माथिल्लो स्टेशन—जहाँ केबल कारको रोमाञ्च, भालेश्वर महादेवको आस्था र काठमाडौँ उपत्यकामाथिको विशाल दृश्य एउटै यात्रामा भेटिन्छ।</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#plan" class="rounded-full bg-[#d7a332] px-6 py-3 font-bold text-[#10231d]">भ्रमण योजना हेर्नुहोस्</a>
+            <a href="https://maps.app.goo.gl/Rgg86Zios8XGvSxV7" rel="noopener" class="rounded-full border border-white/30 bg-white/10 px-6 py-3 font-bold backdrop-blur">Google Maps</a>
+          </div>
+          <div class="mt-10 grid max-w-2xl grid-cols-3 gap-3 text-center">
+            <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">२.५ किमि</strong><span class="text-xs text-white/70">केबल लाइन</span></div>
+            <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">९–१३ मिनेट</strong><span class="text-xs text-white/70">एकतर्फी यात्रा</span></div>
+            <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">४.५ ★</strong><span class="text-xs text-white/70">१०,२९९ समीक्षा</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan" class="grid-noise py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div class="lg:sticky lg:top-8">
+            <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">एक दिनको सरल योजना</p>
+            <h2 class="mt-3 text-4xl font-black leading-tight md:text-5xl">पहिले दृश्य,<br/>त्यसपछि मन्दिर</h2>
+            <p class="mt-5 max-w-md leading-7 text-[#455d53]">हिमाल हेर्नु मुख्य उद्देश्य हो भने बिहानको सफा समय प्राथमिकता दिनुहोस्। मौसम चाँडै बदलिन सक्छ, त्यसैले शीर्ष दृश्यलाई यात्राको सुरुवातमै राख्नु व्यावहारिक हुन्छ।</p>
+          </div>
+          <div class="grid gap-5 md:grid-cols-2">
+            {[
+              ['०१', 'थानकोटतर्फ पुग्नुहोस्', 'काठमाडौँबाट ट्याक्सी/राइड-हेलिङ वा स्थानीय सवारीमार्फत तल्लो स्टेशन पुग्नुहोस्।'],
+              ['०२', 'केबल कारमा माथि', 'करिब ९–१३ मिनेटको यात्रामा जंगल, उपत्यका र रिजको दृश्य खुल्दै जान्छ।'],
+              ['०३', 'भालेश्वर महादेव', 'माथिल्लो स्टेशनबाट मन्दिर क्षेत्रतर्फ हिँड्नुहोस्; पूजा भइरहेको बेला स्थानीय मर्यादा पालना गर्नुहोस्।'],
+              ['०४', 'दृश्य टावर र खाना', 'मौसम खुलेको भए दृश्य टावर/टेरेस, त्यसपछि स्थानीय वा बहु-परिकार भोजनसँग यात्रा पूरा गर्नुहोस्।']
+            ].map(([n,t,d]) => <article class="rounded-[2rem] border border-[#d8e0d9] bg-white p-7 shadow-soft"><div class="text-sm font-black text-[#b6422b]">{n}</div><h3 class="mt-5 text-2xl font-black">{t}</h3><p class="mt-3 leading-7 text-[#53675e]">{d}</p></article>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#10231d] py-20 text-white md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+          <div class="overflow-hidden rounded-[2.5rem] border border-white/10">
+            <img src="https://www.chandragirihills.com/wp-content/themes/yootheme/cache/64/cable2-643e1d85.jpeg" alt="चन्द्रागिरि केबल कार र हिमाली दृश्य" loading="lazy" class="aspect-[4/3] h-full w-full object-cover" />
+          </div>
+          <div class="lg:pl-8">
+            <p class="text-sm font-black uppercase tracking-[.25em] text-[#f1c75b]">माथि किन जाने?</p>
+            <h2 class="mt-3 text-4xl font-black md:text-5xl">सहरबाट केही मिनेटमै<br/>हिमाली क्षितिज</h2>
+            <div class="mt-8 space-y-6 text-white/78">
+              <p class="leading-8">चन्द्रागिरि हिलको माथिल्लो स्टेशन आफैंमा गन्तव्य हो। मौसम सफा हुँदा उपत्यकाको फैलावट, हरियो रिज र हिमालय शृङ्खला एउटै फ्रेममा देखिन्छ।</p>
+              <p class="leading-8">स्टेशन क्षेत्रबाट भालेश्वर महादेव मन्दिर, दृश्य टावर, भोजन क्षेत्र र विभिन्न मनोरञ्जन गतिविधिमा सजिलै जान सकिन्छ।</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tickets" class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-8 lg:grid-cols-3">
+          <div class="lg:col-span-1"><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">टिकट / शुल्क</p><h2 class="mt-3 text-4xl font-black">केबल कार भाडा</h2><p class="mt-4 leading-7 text-[#53675e]">आधिकारिक सूचीअनुसार करसहितको सामान्य दर। दर/नीति बदलिन सक्छ, टिकट किन्नुअघि आधिकारिक साइटमा फेरि जाँच गर्नुहोस्।</p></div>
+          <div class="lg:col-span-2 grid gap-4 md:grid-cols-3">
+            <div class="rounded-[2rem] bg-[#eef3ee] p-7"><span class="text-sm font-bold text-[#69856a]">नेपाली • दुईतर्फी</span><strong class="mt-5 block text-4xl">NPR 850</strong><span class="mt-2 block text-sm">एकतर्फी NPR 510</span></div>
+            <div class="rounded-[2rem] bg-[#eef3ee] p-7"><span class="text-sm font-bold text-[#69856a]">SAARC • दुईतर्फी</span><strong class="mt-5 block text-4xl">INR 950</strong><span class="mt-2 block text-sm">एकतर्फी INR 570</span></div>
+            <div class="rounded-[2rem] bg-[#193c31] p-7 text-white"><span class="text-sm font-bold text-white/65">विदेशी • दुईतर्फी</span><strong class="mt-5 block text-4xl">US$ 23</strong><span class="mt-2 block text-sm text-white/75">एकतर्फी US$ 13</span></div>
+          </div>
+        </div>
+        <div class="mt-8 rounded-3xl border border-[#d8e0d9] p-6 text-sm leading-7 text-[#53675e]">छुट नीति अन्तर्गत निश्चित उचाइसम्मका बालबालिका, ज्येष्ठ नागरिक, अपाङ्गता भएका व्यक्ति, विद्यार्थी तथा केही अन्य समूहका लागि छुट/निःशुल्क सुविधा उल्लेख गरिएको छ; वैध परिचयपत्र आवश्यक पर्न सक्छ।</div>
+      </div>
+    </section>
+
+    <section class="bg-[#eef3ee] py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-6 md:grid-cols-3">
+          <article class="rounded-[2rem] bg-white p-7 shadow-soft"><h3 class="text-2xl font-black">खुल्ने समय</h3><div class="mt-6 space-y-3">{openingHours.map(([d,h]) => <div class="flex justify-between gap-4 border-b border-[#e6ece7] pb-3 text-sm"><span>{d}</span><strong>{h}</strong></div>)}</div><p class="mt-4 text-xs leading-5 text-[#69856a]">नोट: आधिकारिक केबल कार तालिका र नक्सा लिस्टिङमा समय केही फरक देखिन सक्छ; सञ्चालन दिनमै पुष्टि गर्नु सुरक्षित हुन्छ।</p></article>
+          <article class="rounded-[2rem] bg-white p-7 shadow-soft"><h3 class="text-2xl font-black">उत्तम समय</h3><p class="mt-6 leading-7 text-[#53675e]">साफ मौसम र हिमाली दृश्यका लागि बिहान छान्नु राम्रो। शनिबार/बिदामा भीड बढ्न सक्छ। वर्षायाममा बादल र कुहिरोले दृश्य रोक्न सक्छ।</p><div class="mt-6 rounded-2xl bg-[#f6f3e7] p-5 text-sm"><strong>सुझाव:</strong> हल्का ज्याकेट, पानी, घामबाट बच्ने सामग्री र आरामदायी जुत्ता लैजानुहोस्।</div></article>
+          <article class="rounded-[2rem] bg-white p-7 shadow-soft"><h3 class="text-2xl font-black">सुझावित बसाइ</h3><strong class="mt-6 block text-5xl text-[#b6422b]">३–४ घण्टा</strong><p class="mt-5 leading-7 text-[#53675e]">केबल कार, मन्दिर, दृश्य टावर र खानपान समेट्न पर्याप्त। साहसिक गतिविधि, विस्तृत फोटो वा रिसोर्ट भोजन जोड्ने हो भने आधा दिन सहज हुन्छ।</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">आस्था र वास्तुकला</p><h2 class="mt-3 text-4xl font-black md:text-5xl">भालेश्वर महादेव</h2><p class="mt-6 leading-8 text-[#53675e]">माथिल्लो स्टेशन क्षेत्रको आध्यात्मिक केन्द्र भगवान शिवलाई समर्पित भालेश्वर महादेव मन्दिर हो। नेपाली प्यागोडा शैलीको मन्दिर, खुला प्राङ्गण र हिमाली पृष्ठभूमिले यसलाई दर्शनीय तथा तीर्थ—दुवै अनुभव बनाउँछ।</p><p class="mt-4 leading-8 text-[#53675e]">मन्दिर सक्रिय पूजा स्थल हो; जुत्ता, फोटो र पूजा क्षेत्रसम्बन्धी स्थानीय निर्देशन सम्मान गर्नुहोस्।</p></div>
+          <img src="https://bigskytreks.weebly.com/uploads/2/0/6/3/20638024/chandragiri-day-hike_orig.jpeg" alt="भालेश्वर महादेव मन्दिर, चन्द्रागिरि" loading="lazy" class="aspect-[4/3] w-full rounded-[2.5rem] object-cover shadow-soft" />
+        </div>
+      </div>
+    </section>
+
+    <section id="nearby" class="bg-[#10231d] py-20 text-white md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-12 lg:grid-cols-2">
+          <div><p class="text-sm font-black uppercase tracking-[.25em] text-[#f1c75b]">वरिपरिका स्वाद</p><h2 class="mt-3 text-4xl font-black">खाना</h2><div class="mt-7 space-y-4">
+            <div class="rounded-3xl border border-white/12 bg-white/5 p-6"><h3 class="text-xl font-bold">View Tower Restaurant</h3><p class="mt-2 text-white/70">दृश्य टावरमुनिको भोजन क्षेत्र—दृश्य र बस्ने सुविधा जोडिएको विकल्प।</p></div>
+            <div class="rounded-3xl border border-white/12 bg-white/5 p-6"><h3 class="text-xl font-bold">Food Courts & Restaurants</h3><p class="mt-2 text-white/70">माथिल्लो परिसरमा स्न्याक्सदेखि बहु-परिकार भोजनसम्म विभिन्न विकल्प।</p></div>
+            <div class="rounded-3xl border border-white/12 bg-white/5 p-6"><h3 class="text-xl font-bold">Café Kathmandu / Bricks Bar</h3><p class="mt-2 text-white/70">नजिकैको चन्द्रागिरि हिल्स रिसोर्टमा नेपाली थाली, अन्तर्राष्ट्रिय परिकार, कफी र पेय पदार्थ।</p></div>
+          </div></div>
+          <div><p class="text-sm font-black uppercase tracking-[.25em] text-[#f1c75b]">वरिपरिका आकर्षण</p><h2 class="mt-3 text-4xl font-black">के हेर्ने?</h2><div class="mt-7 grid gap-4 sm:grid-cols-2">
+            {[
+              ['भालेश्वर महादेव', 'माथिल्लो परिसरको प्रमुख शिव मन्दिर।'],
+              ['दृश्य टावर', 'मौसम सफा हुँदा हिमालय र उपत्यकाको ३६०° दृश्य।'],
+              ['चन्द्रागिरि हिल्स लुकआउट', 'रिज र उपत्यकाको फोटोका लागि खुला दृश्य क्षेत्र।'],
+              ['थानकोट', 'तल्लो स्टेशनतर्फको ऐतिहासिक बसोबास र पश्चिमी प्रवेश क्षेत्र।']
+            ].map(([t,d]) => <article class="rounded-3xl bg-white p-6 text-[#10231d]"><h3 class="text-xl font-black">{t}</h3><p class="mt-2 text-sm leading-6 text-[#53675e]">{d}</p></article>)}
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="rounded-[2rem] border border-[#d8e0d9] p-7 lg:col-span-2"><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">विस्तृत यातायात</p><h2 class="mt-3 text-3xl font-black">काठमाडौँ → थानकोट → माथिल्लो स्टेशन</h2><div class="mt-6 grid gap-5 md:grid-cols-2"><div><h3 class="font-black">ट्याक्सी / राइड-हेलिङ</h3><p class="mt-2 leading-7 text-[#53675e]">काठमाडौँ केन्द्रबाट तल्लो स्टेशनसम्म सबैभन्दा सीधा विकल्प। ट्राफिकअनुसार यात्रा समय फरक हुन्छ। नक्सामा “Chandragiri Hills Cable Car Base Station” राख्नुहोस्।</p></div><div><h3 class="font-black">सार्वजनिक यातायात</h3><p class="mt-2 leading-7 text-[#53675e]">कलंकी/थानकोटतर्फ जाने बस वा माइक्रो प्रयोग गरी थानकोट नजिक पुगेर स्थानीय सवारी वा पैदलमार्फत आधार स्टेशनतर्फ जान सकिन्छ।</p></div></div></article>
+          <article class="rounded-[2rem] bg-[#f6f3e7] p-7"><p class="text-sm font-black uppercase tracking-[.25em] text-[#9b7622]">पार्किङ</p><h2 class="mt-3 text-3xl font-black">तल्लो स्टेशनमा</h2><p class="mt-6 leading-7 text-[#53675e]">सञ्चालकको वार्षिक प्रतिवेदनमा तल्लो स्टेशनमा करिब २०० कार र ५०० मोटरसाइकल अट्ने पार्किङ क्षमता उल्लेख छ। व्यस्त शनिबार/बिदामा चाँडै पुग्नु उपयुक्त हुन्छ।</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="bg-[#eef3ee] py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-4"><div><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">स्थान</p><h2 class="mt-3 text-4xl font-black">नक्सामा चन्द्रागिरि</h2></div><a href="https://maps.app.goo.gl/Rgg86Zios8XGvSxV7" class="font-bold text-[#b6422b]" rel="noopener">Google Maps मा खोल्नुहोस् ↗</a></div>
+        <div class="overflow-hidden rounded-[2.5rem] bg-white shadow-soft"><iframe title="चन्द्रागिरि केबल कार माथिल्लो स्टेसन नक्सा" src="https://www.google.com/maps?q=27.667243,85.205841&z=15&output=embed&hl=ne" width="100%" height="520" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <p class="mt-4 text-sm text-[#53675e]">ठेगाना: {place.address}</p>
+      </div>
+    </section>
+
+    <section id="faq" class="py-20 md:py-28">
+      <div class="mx-auto max-w-5xl px-5 md:px-8">
+        <div class="text-center"><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">FAQ</p><h2 class="mt-3 text-4xl font-black md:text-5xl">प्रायः सोधिने प्रश्न</h2></div>
+        <div class="mt-10 divide-y divide-[#d8e0d9] border-y border-[#d8e0d9]">{faq.map(({q,a}) => <details class="group py-6"><summary class="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-black"><span>{q}</span><span class="text-[#b6422b] group-open:rotate-45">＋</span></summary><p class="max-w-3xl pt-4 leading-8 text-[#53675e]">{a}</p></details>)}</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#0b1915] py-12 text-white">
+    <div class="mx-auto max-w-7xl px-5 md:px-8">
+      <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <div><img src="/logo.svg" alt="चन्द्रागिरि केबल कार" class="h-14 w-auto rounded-2xl bg-white p-2" /><p class="mt-5 max-w-xl text-sm leading-6 text-white/60">यो स्वतन्त्र यात्रा मार्गदर्शिका हो; Chandragiri Hills Ltd., Google वा स्थानीय निकायको आधिकारिक वेबसाइट होइन। सञ्चालन, मूल्य र मौसमसम्बन्धी जानकारी यात्रा अघि आधिकारिक स्रोतमा पुनः जाँच गर्नुहोस्।</p></div>
+        <div class="flex flex-wrap gap-4 text-sm font-semibold text-white/75"><a href="#tickets">टिकट</a><a href="#map">नक्सा</a><button id="cookie-settings" type="button">Cookie सेटिङ</button><a href="/privacy/">गोपनीयता</a><a href="/terms/">सर्तहरू</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cookie-banner" class="fixed inset-x-4 bottom-4 z-50 hidden max-w-xl rounded-3xl border border-[#d8e0d9] bg-white p-5 shadow-soft md:left-auto md:right-6">
+    <p class="font-black">Analytics Cookie</p><p class="mt-2 text-sm leading-6 text-[#53675e]">तपाईं सहमत भए मात्र GA4 (G-HXM22WWPKP) लोड हुन्छ।</p>
+    <div class="mt-4 flex gap-3"><button id="cookie-accept" class="rounded-full bg-[#193c31] px-5 py-2 text-sm font-bold text-white">स्वीकार</button><button id="cookie-reject" class="rounded-full border border-[#d8e0d9] px-5 py-2 text-sm font-bold">अस्वीकार</button></div>
+  </div>
+  <script is:inline>
+    (() => {
+      const KEY = 'chandragiri-analytics-consent';
+      const banner = document.getElementById('cookie-banner');
+      const loadGA = () => {
+        if (document.querySelector('script[data-ga4]')) return;
+        const s = document.createElement('script'); s.async = true; s.dataset.ga4 = 'true'; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP'; document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ window.dataLayer.push(arguments); }
+        gtag('js', new Date()); gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+      };
+      const state = localStorage.getItem(KEY);
+      if (state === 'yes') loadGA(); else if (!state) banner?.classList.remove('hidden');
+      document.getElementById('cookie-accept')?.addEventListener('click', () => { localStorage.setItem(KEY,'yes'); banner?.classList.add('hidden'); loadGA(); });
+      document.getElementById('cookie-reject')?.addEventListener('click', () => { localStorage.setItem(KEY,'no'); banner?.classList.add('hidden'); });
+      document.getElementById('cookie-settings')?.addEventListener('click', () => banner?.classList.remove('hidden'));
+    })();
+  </script>
+</body>
+</html>

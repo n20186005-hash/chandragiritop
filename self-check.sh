@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+rm -rf node_modules dist .astro
+CI=1 corepack pnpm install --frozen-lockfile
+pnpm check
+pnpm build
+if [[ -f pnpm-workspace.yaml ]]; then grep -Eq '^packages:|^  - ' pnpm-workspace.yaml; fi
+if grep -R -nE 'example\.com|localhost|chrome-extension://' dist; then echo 'Forbidden placeholder found'; exit 1; fi
+if [[ -f dist/sitemap-index.xml || -f dist/sitemap-0.xml ]]; then
+  if grep -R -nE '<lastmod>|example\.com|localhost' dist/sitemap*.xml; then echo 'Invalid sitemap content'; exit 1; fi
+fi

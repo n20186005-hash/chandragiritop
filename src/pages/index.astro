@@ -108,8 +108,8 @@ async function getWeather() {
   const now = Date.now();
   if (_weatherCache.value && now - _weatherCache.ts < WEATHER_TTL) return _weatherCache.value;
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}`
-    + `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m`
-    + `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=auto&forecast_days=7`;
+    + `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index`
+    + `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,sunrise,sunset&timezone=auto&forecast_days=7`;
   const res = await fetch(url, { cf: { cacheTtl: 1800, cacheEverything: true } });
   if (!res.ok) throw new Error('weather_fetch_failed');
   const data = await res.json();
@@ -117,21 +117,102 @@ async function getWeather() {
   return data;
 }
 
+// Wind speed (km/h) → Beaufort level
+function beaufort(kmh) {
+  const t = [1,5,11,19,28,38,49,61,74,88,102,117];
+  let lvl = 0;
+  for (let i = 0; i < t.length; i++) { if (kmh > t[i]) lvl = i + 1; }
+  return lvl;
+}
+const windWords = ['हावा शान्त','हावा निकै कम','हावा कम','हावा मध्यम','हावा मध्यम','हावा चलेको','हावा बलियो','हावा बलियो','हावा धेरै बलियो','आँधी जस्तो','आँधी','तीव्र आँधी','कठोर आँधी'];
+
 let weather = null, weatherError = false;
 try { weather = await getWeather(); } catch (e) { weatherError = true; }
 
-let cur = null, needUmbrella = false;
+// ---- Smart, action-oriented advice (derived from weather fields) ----
+let cur = null;
+let advice = { outfit: [], plan: [], items: [], risk: [] };
 if (weather?.current) {
+  const pop = weather.daily?.precipitation_probability_max?.[0] ?? 0;
+  const uv = weather.current.uv_index ?? (weather.daily?.uv_index_max?.[0] ?? 0);
+  const windBft = beaufort(weather.current.wind_speed_10m);
   cur = {
     temp: Math.round(weather.current.temperature_2m),
     feels: Math.round(weather.current.apparent_temperature),
     humidity: weather.current.relative_humidity_2m,
     wind: Math.round(weather.current.wind_speed_10m),
+    windBft,
+    windWord: windWords[windBft] ?? 'हावा',
     code: weather.current.weather_code,
-    precip: weather.current.precipitation ?? 0
+    precip: weather.current.precipitation ?? 0,
+    pop,
+    uv: Math.round(uv)
   };
-  const pop0 = weather.daily?.precipitation_probability_max?.[0] ?? 0;
-  needUmbrella = cur.precip > 0.1 || pop0 >= 40;
+
+  const heavy = [65,66,67,82,95,96,99].includes(cur.code) || ([61,63,80,81].includes(cur.code) && pop >= 50);
+  const light = [51,53,55,56,57,61,80].includes(cur.code) || (pop >= 55 && !heavy);
+  const storm = [95,96,99].includes(cur.code);
+  const tmax = Math.round(weather.daily?.temperature_2m_max?.[0] ?? cur.temp);
+  const tmin = Math.round(weather.daily?.temperature_2m_min?.[0] ?? cur.temp);
+  const diff = tmax - tmin;
+
+  // 🌂 Rain / precipitation
+  if (storm) {
+    advice.risk.push('चट्याङ / आँधी छ — चढाइ (केबल कार टावर/रिज) नगर्ने, रुखमुनि वा खुला ठाउँमा नबस्ने।');
+    advice.plan.push('पानी/विद्युत जोखिममा — भित्रै बस्ने, बाहिरका स्लोप/टावर टार्ने।');
+    advice.items.push('रेनकोट (लामो छाता हावामा टुट्न सक्छ)');
+  } else if (heavy) {
+    advice.risk.push('वर्षा बाक्लो छ — खोल्सा/निचो ठाउँबाट टाढा बस्ने; भिर/स्लोपमा माटो खस्न सक्छ, केबल कार सीमित हुन सक्छ।');
+    advice.outfit.push('पानी जोगाउने ज्याकेट / रेनकोट लगाउनुहोस्।');
+    advice.plan.push('घरभित्र/कभर गरिएका ठाउँ प्राथमिकता; खुला रिज र स्लोपमा कम हिँड्ने।');
+    advice.items.push('रेनकोट (हावा भएकाले लामो छाता सिफारिस हुँदैन)');
+  } else if (light) {
+    advice.outfit.push('सानो पानी पर्न सक्छ — पानी जोगाउने लुगा वा फोल्डेबल छाता साथमा राख्नुहोस्।');
+    advice.plan.push('बाटो भुस्याहा हुन सक्छ, सरकिन नसक्ने जुत्ता लगाउनुहोस्।');
+  } else if (pop >= 60) {
+    advice.outfit.push(`वर्षाको सम्भावना बढी (करिब ${pop}%) छ — छाता/रेनकोट साथमा राख्नुहोस् (तर "आज निश्चित वर्षा" होइन)।`);
+  } else if (pop >= 40) {
+    advice.outfit.push(`वर्षाको केही सम्भावना (${pop}%) छ — छाता बोक्न हानि छैन।`);
+  }
+
+  // 🌞 High temp & UV
+  if (tmax >= 32) {
+    advice.outfit.push('तापक्रम बढी छ — हल्का, सास फेर्न मिल्ने लुगा लगाउनुहोस्।');
+    advice.plan.push('दिउँसोको चिप्लो समय (११–३ बजे) बाहिर छोटो राख्ने।');
+  }
+  if (cur.uv >= 5) {
+    advice.outfit.push(`उचाइमा UV बलियो (${cur.uv}) छ — सनस्क्रिन, टोपी/कालो चश्मा लगाउनुहोस्।`);
+    advice.items.push('सनस्क्रिन, कालो चश्मा, टोपी');
+  }
+
+  // ❄️ Low temp / day-night diff
+  if (diff > 8) advice.outfit.push(`दिन/रातको तापक्रम फरक (${diff}°C+) बढी छ — तह-तह लुगा/ज्याकेट लैजानुहोस्।`);
+  if (tmax <= 10) {
+    advice.outfit.push('चिसो छ — तातो ज्याकेट/स्वेटर लगाउनुहोस्।');
+    advice.items.push('हातमुटे, टोपी');
+  }
+
+  // 💨 Wind
+  if (windBft >= 7) {
+    advice.risk.push(`हावा धेरै बलियो (${windBft} तह) छ — माथिल्लो स्टेशन/रिजमा सावधान, केबल कार सीमित वा रोकिन सक्छ।`);
+    advice.plan.push('खुला रिज र टायो/बोर्डबाट टाढा बस्ने।');
+  } else if (windBft >= 5) {
+    advice.plan.push(`हावा चलेको (${windBft} तह) छ — माथि खुला ठाउँमा सावधान, टोपी उड्न सक्छ।`);
+    advice.items.push('टोपी कस्ने डोरी/ब्यान्ड');
+  }
+
+  // ☀️/☁️ Sunny / cloudy
+  if (cur.code <= 1) advice.plan.push('मौसम सफा छ — हिमाल/सूर्योदय-सूर्यास्त राम्रो; दृश्य फोटो अवसर।');
+  else if (cur.code <= 3) advice.plan.push('उज्यालो मध्यम (बदली) छ — फोटो र लामो हिँडाइ उपयुक्त, सीधा घाम कम।');
+
+  // 🌫️ Fog
+  if (cur.code === 45 || cur.code === 48) {
+    advice.risk.push('कुहिरो छ — माथिबाट हिमाल/दृश्य नदेखिन सक्छ; बिहान/बेलुका सावधान, बाटो खुस्किन सक्छ।');
+  }
+
+  // Mountain fallback (Chandragiri = ridge viewpoint)
+  if (advice.outfit.length === 0) advice.outfit.push('सामान्य लुगा ठीक छ; उचाइमा हावा चल्न सक्छ, एउटा हल्को ज्याकेट राख्दा फाइदा।');
+  if (advice.plan.length === 0) advice.plan.push('मौसम सामान्य छ — सूचीअनुसार यात्रा गर्न सकिन्छ।');
 }
 const [curLabel, curIcon] = wmoInfo(cur?.code ?? 0);
 

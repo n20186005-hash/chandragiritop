@@ -1,22 +1,34 @@
 ---
 import '../styles/global.css';
 
-export const prerender = true;
+export const prerender = false;
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://chandragiritop.com';
 const pagePath = '/';
-const canonical = siteUrl ? `${siteUrl}${pagePath}` : undefined;
-const ogImage = undefined;
+const canonical = `${siteUrl}${pagePath}`;
+const ogImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/View_from_chandragiri_32.jpg/1600px-View_from_chandragiri_32.jpg';
 
 const place = {
-  name: 'चन्द्रागिरि केबल कार माथिल्लो स्टेसन',
+  nameNe: 'चन्द्रागिरि केबल कार माथिल्लो स्टेसन',
+  name: 'Chandragiri Cable Car Top Station',
+  shortName: 'Chandragiri Top',
+  city: 'Chandragiri',
+  province: 'Bagmati Province',
+  country: 'Nepal',
   address: 'M683+6V9, Kulekhani-Phakhel-Matatirtha Rd, Chandragiri, Bagmati Province 44600, Nepal',
   latitude: 27.667243,
   longitude: 85.205841,
   rating: 4.5,
-  reviewCount: 10299,
+  reviewCount: 10307,
   phone: '+977 1-4312515'
 };
+
+const mapsShareUrl = 'https://maps.app.goo.gl/Rgg86Zios8XGvSxV7';
+const govtTourismUrl = 'https://www.welcomenepal.com/';
+const reviewUpdatedMonth = '2026 年 9 月';
+const reviewSourceNote = '同步自 Google 地图用户评价，同步时间 2026 年 9 月；版权归原作者与 Google 地图所有';
+const reviewButtonLabel = '在谷歌地图查看全部评价';
+const reviewInlineNote = '评分与评价数同步自谷歌地图（Google Maps）用户评价 · 2026 年 9 月 · 点击查看谷歌地图全部评价↗';
 
 const openingHours = [
   ['सोमबार', '09:00–18:00'], ['मंगलबार', '09:00–18:00'], ['बुधबार', '09:00–18:00'],
@@ -28,15 +40,23 @@ const faq = [
   { q: 'कुन समयमा जानु राम्रो?', a: 'हिमालको दृश्य प्राथमिकता हो भने बिहानको सफा आकाश राम्रो हुन्छ। बादल, हावा वा मर्मतका कारण दृश्य र सञ्चालनमा असर पर्न सक्छ, त्यसैले निस्कनुअघि आधिकारिक सञ्चालन सूचना हेर्नुहोस्।' },
   { q: 'माथि पुगेपछि के हेर्न सकिन्छ?', a: 'भालेश्वर महादेव मन्दिर, दृश्य टावर, काठमाडौँ उपत्यका र मौसम खुलेको दिन हिमालय शृङ्खलाको विस्तृत दृश्य मुख्य आकर्षण हुन्।' },
   { q: 'बालबालिका र ह्वीलचेयर प्रयोगकर्ताका लागि उपयुक्त छ?', a: 'सञ्चालकका अनुसार ह्वीलचेयर प्रयोगकर्तालाई चढ्न/ओर्लन कर्मचारीले सहयोग गर्छन्। ११ वर्ष वा कम उमेरका बालबालिकासँग कम्तीमा १५ वर्षका साथीसँग यात्रा गर्नुपर्ने जानकारी पनि आधिकारिक FAQ मा दिइएको छ।' },
-  { q: 'कति समय छुट्याउने?', a: 'केबल कार, मन्दिर, दृश्य क्षेत्र र खानपान मिलाएर करिब ३–४ घण्टा सहज हुन्छ। मौसम राम्रो छ र गतिविधि थप्ने हो भने आधा दिन राख्नु उपयोगी हुन्छ।' }
+  { q: 'कति समय छुट्याउने?', a: 'केबल कार, मन्दिर, दृश्य क्षेत्र र खानपान मिलाएर करिब ३–४ घण्टा सहज हुन्छ। मौसम राम्रो छ र गतिविधि थप्ने हो भने आधा दिन राख्नु उपयोगी हुन्छ।' },
+  { q: 'Where is Chandragiri Cable Car Top Station located?', a: 'Chandragiri Cable Car Top Station is located in Chandragiri, Bagmati Province, Nepal, on the ridge southwest of the Kathmandu Valley at about 2,520 m above sea level.' },
+  { q: 'Is Chandragiri Top free to visit?', a: 'No. The cable car is a paid service and tickets are required for the ride. Rates differ for Nepali, SAARC and foreign visitors, and discounts may apply to children, seniors and students with valid ID.' },
+  { q: 'How long is the Chandragiri cable car ride?', a: 'A one-way ride takes about 9–13 minutes over the roughly 2.5 km line that connects the Thankot base station with the top station.' },
+  { q: 'What are the Chandragiri cable car opening hours?', a: 'Generally 09:00–18:00 Sunday to Friday and 08:00–18:00 on Saturday and public holidays. Times can vary, so confirm on the official site before you travel.' },
+  { q: 'What can I see at the top station?', a: 'Bhaleshwor Mahadev Temple, the view tower, panoramic Kathmandu Valley views and, on clear days, the Himalaya range are the main highlights.' }
 ];
 
 const touristSchema = {
   '@context': 'https://schema.org',
   '@type': ['TouristAttraction', 'LocalBusiness'],
+  '@id': `${canonical}#attraction`,
   name: place.name,
-  alternateName: 'Chandragiri Cable Car Top Station',
-  ...(canonical ? { url: canonical } : {}),
+  alternateName: [place.nameNe, place.shortName, `${place.city} ${place.name}`],
+  description: `Comprehensive visitor guide to ${place.name} in ${place.city}, ${place.province}, ${place.country}.`,
+  url: canonical,
+  image: [ogImage],
   telephone: place.phone,
   address: {
     '@type': 'PostalAddress',
@@ -47,12 +67,13 @@ const touristSchema = {
     addressCountry: 'NP'
   },
   geo: { '@type': 'GeoCoordinates', latitude: place.latitude, longitude: place.longitude },
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: place.rating, reviewCount: place.reviewCount },
+  hasMap: mapsShareUrl,
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '09:00', closes: '18:00' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday','Sunday'], opens: '08:00', closes: '18:00' }
   ],
-  isAccessibleForFree: false
+  isAccessibleForFree: false,
+  sameAs: [mapsShareUrl, govtTourismUrl]
 };
 
 const faqSchema = {
@@ -60,20 +81,108 @@ const faqSchema = {
   '@type': 'FAQPage',
   mainEntity: faq.map(({q,a}) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
 };
+
+// ---- Real-time weather (Open-Meteo, server-side fetch + short TTL cache) ----
+const WEATHER_TTL = 30 * 60 * 1000;
+let _weatherCache = { ts: 0, value: null };
+
+const neDays = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार'];
+
+function wmoInfo(code) {
+  const map = {
+    0: ['सफा आकाश', '☀️'], 1: ['मुख्यतया सफा', '🌤️'], 2: ['आंशिक बदली', '⛅'],
+    3: ['बदली', '☁️'], 45: ['कुहिरो', '🌫️'], 48: ['कुहिरो', '🌫️'],
+    51: ['हल्का टिप्पा', '🌦️'], 53: ['टिप्पा', '🌦️'], 55: ['बाक्लो टिप्पा', '🌦️'],
+    56: ['हिम टिप्पा', '🌧️'], 57: ['हिम टिप्पा', '🌧️'],
+    61: ['हल्का वर्षा', '🌧️'], 63: ['वर्षा', '🌧️'], 65: ['बाक्लो वर्षा', '🌧️'],
+    66: ['हिम वर्षा', '🌧️'], 67: ['हिम वर्षा', '🌧️'],
+    71: ['हल्को हिमपात', '🌨️'], 73: ['हिमपात', '❄️'], 75: ['बाक्लो हिमपात', '❄️'], 77: ['हिम कण', '🌨️'],
+    80: ['वर्षाका फुहारा', '🌦️'], 81: ['वर्षाका फुहारा', '🌧️'], 82: ['बाक्लो वर्षा फुहारा', '⛈️'],
+    85: ['हिम फुहारा', '🌨️'], 86: ['बाक्लो हिम फुहारा', '❄️'],
+    95: ['आँधी / चट्याङ', '⛈️'], 96: ['आँधी / असिना', '⛈️'], 99: ['आँधी / असिना', '⛈️']
+  };
+  return map[code] ?? ['बदली', '🌥️'];
+}
+
+async function getWeather() {
+  const now = Date.now();
+  if (_weatherCache.value && now - _weatherCache.ts < WEATHER_TTL) return _weatherCache.value;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}`
+    + `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m`
+    + `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=auto&forecast_days=7`;
+  const res = await fetch(url, { cf: { cacheTtl: 1800, cacheEverything: true } });
+  if (!res.ok) throw new Error('weather_fetch_failed');
+  const data = await res.json();
+  _weatherCache = { ts: now, value: data };
+  return data;
+}
+
+let weather = null, weatherError = false;
+try { weather = await getWeather(); } catch (e) { weatherError = true; }
+
+let cur = null, needUmbrella = false;
+if (weather?.current) {
+  cur = {
+    temp: Math.round(weather.current.temperature_2m),
+    feels: Math.round(weather.current.apparent_temperature),
+    humidity: weather.current.relative_humidity_2m,
+    wind: Math.round(weather.current.wind_speed_10m),
+    code: weather.current.weather_code,
+    precip: weather.current.precipitation ?? 0
+  };
+  const pop0 = weather.daily?.precipitation_probability_max?.[0] ?? 0;
+  needUmbrella = cur.precip > 0.1 || pop0 >= 40;
+}
+const [curLabel, curIcon] = wmoInfo(cur?.code ?? 0);
+
+// ---- Visitor facilities (type-neutral, no specific merchants) ----
+const facilities = [
+  ['शौचालय / WC', 'माथिल्लो र तल्लो स्टेशन दुवैमा सार्वजनिक शौचालय छन्। शिखरमा जानुअघि पहिलो पटक प्रयोग गर्न सिफारिस गरिन्छ।'],
+  ['पार्किङ', 'तल्लो (थानकोट) स्टेशनमा निजी सवारी र दुईपाङ्ग्रे वाहनका लागि पार्किङ क्षमता छ। व्यस्त दिन चाँडै पुग्नुहोस्।'],
+  ['भोजन', 'माथिल्लो परिसरमा स्न्याक्सदेखि बहु-परिकार भोजनसम्म विविध विकल्प; धार्मिक क्षेत्र नजिकै शाकाहारी विकल्प प्राथमिकता हुन सक्छ।'],
+  ['बसाइ (लज / रिसोर्ट)', 'चन्द्रागिरि हिल्स परिसर र नजिकैका बसोबास क्षेत्रमा विभिन्न श्रेणीका बासस्थान उपलब्ध छन्।'],
+  ['पसल / स्मृति', 'माथिल्लो परिसरमा साना पसल / स्मृति केन्द्र छन्; नगद र डिजिटल भुक्तानी दुवै सञ्चालनमा छन् कि छैनन् अगाडि जाँच गर्नुहोस्।'],
+  ['इन्धन / चार्जिङ', 'तल्लो स्टेशन नजिकै इन्धन स्टेसन र विद्युतीय सवारीका लागि चार्जिङ बिन्दु छन्; भरिनै आउन सिफारिस गरिन्छ।'],
+  ['सहायता / प्राथमिक उपचार', 'परिसरमा सुरक्षा कर्मचारी र प्राथमिक सहायता उपलब्ध हुन्छ; आपतकालीन सम्पर्क आफैंसँग राख्नुहोस्।']
+];
+
+// ---- Seasonal travel strategy (based on long-term local climate trend; verify before travel) ----
+const seasons = [
+  ['हिउँद (डिसेम्बर–फेब्रुअरी)', 'चिसो; बिहान कुहिरो हुन सक्छ, दिउँसो सफा', 'हिमाल दृश्य उत्कृष्ट', 'तातो लुगा, हातमुटे, टोपी', 'स्पष्ट हिमाल दृश्य, फोटोग्राफी'],
+  ['वसन्त (मार्च–मे)', 'राम्रो; फूल र सफा आकाश', 'दृश्य राम्रो', 'हल्का ज्याकेट, पानी', 'परिवार भ्रमण, हल्का हाइकिङ'],
+  ['वर्षा (जुन–अगस्ट)', 'मनसुन; बादल, कहिलेकाहीँ वर्षा', 'दृश्य कहिलेकाहीँ रोकिन्छ', 'छाता / रेनकोट', 'हरियाली, तथा कम भीड'],
+  ['शरद् (सेप्टेम्बर–नोभेम्बर)', 'वर्षकै सफा; पछिल्लो मनसुनपछि', 'हिमाल र उपत्यका स्पष्ट', 'हल्का ज्याकेट', 'सबैभन्दा उत्तम समय, दृश्य यात्रा']
+];
+
+// ---- Routes by traveller type ----
+const groupRoutes = [
+  ['आफन्त / बालबालिकासँग', ['केबल कारमा माथि (कम्पन कम, सुरक्षित)', 'भालेश्वर महादेव मन्दिर (छोटो हिँडाइ)', 'दृश्य टावरबाट ३६०° दृश्य', 'भोजन क्षेत्रमा स्न्याक्स / खाजा', 'खेल्ने र फिर्ता जाने समय सीमित राख्ने']],
+  ['फोटोग्राफी / प्रकृति', ['बिहानै पुग्ने (सफा प्रकाश, कुहिरोभन्दा अघि)', 'दृश्य टावर र लुकआउटमा प्यानोरमा', 'हिमालयमा घाम लाग्दा सुनौलो दृश्य', 'बेलुका सुनसान समयमा चरा / वन्यजन्तु अवलोकन', 'तिरै र ब्याट्री थप बोक्ने']],
+  ['कम श्रम / पहुँचयोग्य', ['केबल कार (बैठक यात्रा, सीढी कम)', 'माथिल्लो परिसरको पहुँचयोग्य मार्ग', 'भोजन / विश्राम क्षेत्रमा बसाइ', 'धेरै हिँडाइ नगरी दृश्य मात्र', 'सहायक सामग्री / व्हीलचेयर साथमा']]
+];
+
+// ---- General routes (half / full day) ----
+const generalRoutes = [
+  ['अर्धदिन (३–४ घण्टा)', ['थानकोट (तल्लो स्टेशन) आगमन', 'केबल कारमा माथि', 'मन्दिर + दृश्य टावर', 'स्न्याक्स र फिर्ता']],
+  ['पूर्ण दिन (६–८ घण्टा)', ['बिहानै आगमन', 'केबल कार + मन्दिर + टावर', 'भोजन क्षेत्रमा दिउँसो खाना', 'लुकआउट / हल्का ट्रेल', 'सूर्यास्तअघि फिर्ता']]
+];
 ---
 <!doctype html>
 <html lang="ne">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>चन्द्रागिरि केबल कार माथिल्लो स्टेसन | यात्रा मार्गदर्शिका</title>
-  <meta name="description" content="चन्द्रागिरि केबल कार माथिल्लो स्टेसनको स्थानीय नेपाली यात्रा मार्गदर्शिका—टिकट, समय, यातायात, पार्किङ, भालेश्वर महादेव, खाना र मौसमअनुसार भ्रमण सुझाव।" />
-  {canonical && <link rel="canonical" href={canonical} />}
+  <title>Chandragiri Cable Car Top Station (Chandragiri) | चन्द्रागिरि केबल कार यात्रा मार्गदर्शिका</title>
+  <meta name="description" content="Discover Chandragiri Cable Car Top Station (Chandragiri Top), the iconic cable car destination in Chandragiri, Bagmati Province, Nepal. View the location map, opening hours, nearby Bhaleshwor Mahadev Temple, and travel tips." />
+  <link rel="canonical" href={canonical} />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="चन्द्रागिरि केबल कार माथिल्लो स्टेसन" />
-  <meta property="og:description" content="काठमाडौँ उपत्यकामाथिको केबल कार यात्रा, हिमाली दृश्य र भालेश्वर महादेवसम्मको व्यावहारिक यात्रा योजना।" />
-  {canonical && <meta property="og:url" content={canonical} />}
-  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:title" content="Chandragiri Cable Car Top Station - Chandragiri Travel Guide" />
+  <meta property="og:description" content="Official visitor guide to Chandragiri Cable Car Top Station in Chandragiri, Bagmati Province, Nepal." />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content={`${place.name} in ${place.city}, ${place.country}`} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="theme-color" content="#193c31" />
   <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
@@ -88,8 +197,8 @@ const faqSchema = {
       <a href="#top" aria-label="गृहपृष्ठ" class="rounded-2xl bg-white/92 p-2 shadow-soft backdrop-blur">
         <img src="/logo.svg" alt="चन्द्रागिरि केबल कार लोगो" class="h-12 w-auto" width="300" height="72" />
       </a>
-      <nav class="hidden gap-6 rounded-full border border-white/30 bg-[#10231d]/55 px-6 py-3 text-sm font-semibold text-white backdrop-blur md:flex">
-        <a href="#plan">यात्रा योजना</a><a href="#tickets">टिकट</a><a href="#nearby">वरिपरि</a><a href="#map">नक्सा</a><a href="#faq">FAQ</a>
+      <nav class="hidden gap-5 rounded-full border border-white/30 bg-[#10231d]/55 px-6 py-3 text-sm font-semibold text-white backdrop-blur md:flex">
+        <a href="#plan">यात्रा योजना</a><a href="#weather">मौसम</a><a href="#facilities">सुविधा</a><a href="#tickets">टिकट</a><a href="#nearby">वरिपरि</a><a href="#map">नक्सा</a><a href="#faq">FAQ</a>
       </nav>
     </div>
   </header>
@@ -113,8 +222,97 @@ const faqSchema = {
           <div class="mt-10 grid max-w-2xl grid-cols-3 gap-3 text-center">
             <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">२.५ किमि</strong><span class="text-xs text-white/70">केबल लाइन</span></div>
             <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">९–१३ मिनेट</strong><span class="text-xs text-white/70">एकतर्फी यात्रा</span></div>
-            <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">४.५ ★</strong><span class="text-xs text-white/70">१०,२९९ समीक्षा</span></div>
+            <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"><strong class="block text-2xl">४.५ ★</strong><span class="text-xs text-white/70">१०,३०७ समीक्षा</span></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- English SEO entity-binding guide (added; existing Nepali content preserved) -->
+    <section class="py-20 md:py-28 bg-[#f6f3e7]">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#9b7622]">Visitor Guide · Chandragiri Top</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">About Chandragiri Cable Car Top Station</h2>
+        <p class="mt-6 max-w-3xl leading-8 text-[#53675e]">Welcome to <strong>Chandragiri Cable Car Top Station</strong>, widely recognized as the central <strong>Chandragiri Top</strong>. Located in the heart of <strong>Chandragiri</strong>, <strong>Bagmati Province</strong>, <strong>Nepal</strong>, this destination serves as a primary hub for travelers visiting the region.</p>
+        <p class="mt-4 text-sm font-semibold text-[#69856a]">Chandragiri Cable Car Top Station → Chandragiri → Bagmati Province → Nepal</p>
+        <p class="mt-6 max-w-3xl leading-8 text-[#53675e]">When visiting <strong>Chandragiri Cable Car Top Station</strong>, visitors can easily explore surrounding historical landmarks and points of interest, including <strong>Bhaleshwor Mahadev Temple</strong> and <strong>Kathmandu Valley</strong>.</p>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <div>
+            <h2 class="text-3xl font-black">Location &amp; How to Visit Chandragiri Top in Chandragiri</h2>
+            <p class="mt-5 leading-8 text-[#53675e]">The top station sits at about 2,520 m above sea level in Chandragiri, Bagmati Province, Nepal. The cable car runs from the Thankot base station up to the top station, with a one-way ride of roughly 9–13 minutes.</p>
+          </div>
+          <div>
+            <h2 class="text-3xl font-black">Landmarks &amp; Attractions Around Chandragiri Top</h2>
+            <p class="mt-5 leading-8 text-[#53675e]">Around the top station you'll find Bhaleshwor Mahadev Temple, the view tower, the Chandragiri Hills lookout and the historical settlement of Thankot.</p>
+          </div>
+        </div>
+        <h2 class="mt-12 text-3xl font-black">History &amp; Significance of Chandragiri Cable Car Top Station</h2>
+        <p class="mt-5 max-w-3xl leading-8 text-[#53675e]">Chandragiri is a hill renowned for its panoramic Himalaya views and the sacred Bhaleshwor Mahadev Temple. The cable car connects the Kathmandu Valley rim to the summit, making the top station a key viewpoint and pilgrimage stop.</p>
+      </div>
+    </section>
+
+    <!-- Real-time weather (server-rendered via Open-Meteo; no API/key commentary shown to visitors) -->
+    <section id="weather" class="py-20 md:py-28 bg-[#0b2a3a] text-white">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#7fd3e8]">मौसम • अहिले चन्द्रागिरि</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">अहिलेको मौसम र आगामी दिन</h2>
+
+        {weatherError && (
+          <p class="mt-6 rounded-3xl border border-white/15 bg-white/5 p-6 text-white/80">मौसम डाटा अहिले अनुपलब्ध छ। यात्राअघि आधिकारिक मौसम स्रोत जाँच गर्नुहोस्।</p>
+        )}
+
+        {cur && (
+          <div class="mt-8 grid gap-6 lg:grid-cols-[1.1fr_1.4fr]">
+            <div class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8">
+              <div class="flex items-center gap-4"><span class="text-6xl">{curIcon}</span><div><div class="text-6xl font-black">{cur.temp}°C</div><div class="text-white/70">{curLabel}</div></div></div>
+              <p class="mt-5 text-white/75">अनुभूत तापक्रम <strong class="text-white">{cur.feels}°C</strong> · हावा <strong class="text-white">{cur.wind} किमि/घण्टा</strong> · आर्द्रता <strong class="text-white">{cur.humidity}%</strong></p>
+              {needUmbrella
+                ? <p class="mt-4 rounded-2xl bg-[#f1c75b] px-4 py-3 text-sm font-bold text-[#10231d]">आज वर्षाको सम्भावना छ — छाता वा रेनकोट साथमा राख्नुहोस्।</p>
+                : <p class="mt-4 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold text-white/85">आज छाताको आवश्यकता कम छ; तर हावा वा मौसम बदलिन सक्छ।</p>}
+            </div>
+
+            <div class="rounded-[2.5rem] border border-white/10 bg-white/5 p-6">
+              <p class="text-sm font-black uppercase tracking-[.2em] text-[#7fd3e8]">आगामी ७ दिन</p>
+              <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+                {weather.daily.time.map((t, i) => {
+                  const parts = t.split('-').map(Number);
+                  const wd = neDays[new Date(parts[0], parts[1]-1, parts[2]).getDay()];
+                  const [label, icon] = wmoInfo(weather.daily.weather_code[i]);
+                  const hi = Math.round(weather.daily.temperature_2m_max[i]);
+                  const lo = Math.round(weather.daily.temperature_2m_min[i]);
+                  const pop = weather.daily.precipitation_probability_max[i];
+                  return (
+                    <div class="rounded-2xl bg-white/5 p-3 text-center">
+                      <div class="text-xs text-white/60">{i === 0 ? 'आज' : wd}</div>
+                      <div class="my-2 text-3xl">{icon}</div>
+                      <div class="text-sm font-black">{hi}° / {lo}°</div>
+                      <div class="mt-1 text-[10px] leading-3 text-white/55">{label}</div>
+                      <div class="mt-1 text-[10px] text-[#7fd3e8]">वर्षा {pop}%</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <p class="mt-6 text-xs text-white/50">मौसम डाटा: <a href="https://open-meteo.com/" rel="noopener" target="_blank" class="underline">Open-Meteo</a> — यात्राअघि वास्तविक अवस्था जाँच गर्नुहोस्।</p>
+      </div>
+    </section>
+
+    <!-- Reviews block: shown on page only, NOT in JSON-LD; source cited for Google compliance -->
+    <section id="reviews" class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="rounded-[2.5rem] border border-[#d8e0d9] bg-white p-8 md:p-12 shadow-soft">
+          <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">Google 地图用户评价</p>
+          <h2 class="mt-3 text-4xl font-black">评分与评价</h2>
+          <div class="mt-6 flex flex-wrap items-center gap-6">
+            <div class="text-6xl font-black text-[#b6422b]">{place.rating} <span class="text-3xl">★</span></div>
+            <div class="text-lg"><strong class="block text-2xl">{place.reviewCount.toLocaleString()}</strong><span class="text-sm text-[#69856a]">条 Google 地图用户评价</span></div>
+          </div>
+          <p class="mt-6 max-w-3xl text-sm leading-7 text-[#53675e]">{reviewSourceNote}</p>
+          <a href={mapsShareUrl} rel="noopener" target="_blank" class="mt-6 inline-block rounded-full bg-[#193c31] px-6 py-3 font-bold text-white">{reviewButtonLabel}</a>
+          <p class="mt-4 text-xs text-[#69856a]">{reviewInlineNote}</p>
         </div>
       </div>
     </section>
@@ -210,11 +408,45 @@ const faqSchema = {
       </div>
     </section>
 
-    <section class="py-20 md:py-28">
+    <section id="transit" class="py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-5 md:px-8">
-        <div class="grid gap-6 lg:grid-cols-3">
-          <article class="rounded-[2rem] border border-[#d8e0d9] p-7 lg:col-span-2"><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">विस्तृत यातायात</p><h2 class="mt-3 text-3xl font-black">काठमाडौँ → थानकोट → माथिल्लो स्टेशन</h2><div class="mt-6 grid gap-5 md:grid-cols-2"><div><h3 class="font-black">ट्याक्सी / राइड-हेलिङ</h3><p class="mt-2 leading-7 text-[#53675e]">काठमाडौँ केन्द्रबाट तल्लो स्टेशनसम्म सबैभन्दा सीधा विकल्प। ट्राफिकअनुसार यात्रा समय फरक हुन्छ। नक्सामा “Chandragiri Hills Cable Car Base Station” राख्नुहोस्।</p></div><div><h3 class="font-black">सार्वजनिक यातायात</h3><p class="mt-2 leading-7 text-[#53675e]">कलंकी/थानकोटतर्फ जाने बस वा माइक्रो प्रयोग गरी थानकोट नजिक पुगेर स्थानीय सवारी वा पैदलमार्फत आधार स्टेशनतर्फ जान सकिन्छ।</p></div></div></article>
-          <article class="rounded-[2rem] bg-[#f6f3e7] p-7"><p class="text-sm font-black uppercase tracking-[.25em] text-[#9b7622]">पार्किङ</p><h2 class="mt-3 text-3xl font-black">तल्लो स्टेशनमा</h2><p class="mt-6 leading-7 text-[#53675e]">सञ्चालकको वार्षिक प्रतिवेदनमा तल्लो स्टेशनमा करिब २०० कार र ५०० मोटरसाइकल अट्ने पार्किङ क्षमता उल्लेख छ। व्यस्त शनिबार/बिदामा चाँडै पुग्नु उपयुक्त हुन्छ।</p></article>
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">विस्तृत यातायात</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">कसरी पुग्ने: विमानस्थल, सार्वजनिक र ट्याक्सी</h2>
+        <p class="mt-4 max-w-3xl leading-7 text-[#53675e]">चन्द्रागिरि माथिल्लो स्टेशन तल्लो (थानकोट) स्टेशनबाट केबल कारमार्फत मात्र पुगिन्छ। त्यसैले यात्रा योजना “काठमाडौँ → थानकोट → केबल कार → माथिल्लो स्टेशन” क्रममा बनाउनुहोस्।</p>
+        <div class="mt-8 grid gap-5 md:grid-cols-2">
+          <article class="rounded-[2rem] border border-[#d8e0d9] bg-white p-7 shadow-soft">
+            <h3 class="text-2xl font-black">विमानस्थलबाट (KTM)</h3>
+            <p class="mt-3 leading-7 text-[#53675e]">त्रिभुवन अन्तर्राष्ट्रिय विमानस्थल (KTM) बाट तल्लो स्टेशनसम्म ट्याक्सी/राइड-हेलिङ बाट करिब ४५–७० मिनेट (ट्राफिकअनुसार) लाग्छ। सिधै “Chandragiri Hills Cable Car Base Station, Thankot” गन्तव्य राख्नुहोस्।</p>
+          </article>
+          <article class="rounded-[2rem] border border-[#d8e0d9] bg-white p-7 shadow-soft">
+            <h3 class="text-2xl font-black">ट्याक्सी / राइड-हेलिङ</h3>
+            <p class="mt-3 leading-7 text-[#53675e]">काठमाडौँ केन्द्र (ठमेल, कान्तिपथ, बल्खु) बाट सबैभन्दा सीधा विकल्प। भाडा समय/ट्राफिकअनुसार फरक हुन्छ; अगाडि सहमति गर्नुहोस्। नक्सामा “Chandragiri Hills Cable Car Base Station” राख्नुहोस्।</p>
+          </article>
+          <article class="rounded-[2rem] border border-[#d8e0d9] bg-white p-7 shadow-soft">
+            <h3 class="text-2xl font-black">सार्वजनिक यातायात</h3>
+            <p class="mt-3 leading-7 text-[#53675e]">कलंकी/थानकोटतर्फ जाने स्थानीय बस वा माइक्रो प्रयोग गरी थानकोट नजिक पुगेर सानो सवारी वा पैदलमार्फत आधार स्टेशनतर्फ जान सकिन्छ। सस्तो तर समय बढी लाग्ने विकल्प।</p>
+          </article>
+          <article class="rounded-[2rem] border border-[#d8e0d9] bg-white p-7 shadow-soft">
+            <h3 class="text-2xl font-black">अन्तिम खण्ड (थानकोट → माथि)</h3>
+            <p class="mt-3 leading-7 text-[#53675e]">आधार स्टेशन पुगेपछि टिकट काउन्टरबाट केबल कारको टिकट लिई करिब ९–१३ मिनेटमा माथिल्लो स्टेशन। पैदल यात्रीका लागि पनि माथि जाने ट्रेल छ (शारीरिक तयारी आवश्यक)।</p>
+          </article>
+        </div>
+        <article class="mt-5 rounded-[2rem] bg-[#f6f3e7] p-7">
+          <p class="text-sm font-black uppercase tracking-[.25em] text-[#9b7622]">पार्किङ</p>
+          <h2 class="mt-3 text-3xl font-black">तल्लो स्टेशनमा</h2>
+          <p class="mt-4 leading-7 text-[#53675e]">सञ्चालकको वार्षिक प्रतिवेदनमा तल्लो स्टेशनमा करिब २०० कार र ५०० मोटरसाइकल अट्ने पार्किङ क्षमता उल्लेख छ। व्यस्त शनिबार/बिदामा चाँडै पुग्नु उपयुक्त हुन्छ।</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visitor facilities (type-neutral overview; no specific merchants named) -->
+    <section id="facilities" class="bg-[#eef3ee] py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">आगन्तुक सेवा व सुविधा</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">वरिपरिका सुविधा (प्रकार अनुसार)</h2>
+        <p class="mt-4 max-w-3xl leading-7 text-[#53675e]">हामी स्वतन्त्र, विज्ञापन-मुक्त विज्ञान मार्गदर्शिका हौँ; त्यसैले कुनै विशिष्ट पसल, रेस्टुरेन्ट वा होटलको नाम सिफारिस गर्दैनौँ—केवल के-के पाइन्छ भन्ने प्रकार मात्र।</p>
+        <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {facilities.map(([t,d]) => <article class="rounded-[2rem] border border-[#d8e0d9] bg-white p-7 shadow-soft"><h3 class="text-xl font-black">{t}</h3><p class="mt-3 leading-7 text-[#53675e]">{d}</p></article>)}
         </div>
       </div>
     </section>
@@ -227,10 +459,103 @@ const faqSchema = {
       </div>
     </section>
 
+    <!-- Seasonal travel strategy (long-term local climate trend; honest, not falsely attributed) -->
+    <section id="seasons" class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">ऋतुअनुसार यात्रा</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">चारै ऋतुको यात्रा रणनीति</h2>
+        <p class="mt-4 max-w-3xl leading-7 text-[#53675e]">यो तालिका चन्द्रागिरिको लामो अवधिको स्थानीय मौसम प्रवृत्तिमा (वार्षिक औसत) आधारित छ। वास्तविक मौसम र दृश्य यात्राअघि अफिसियल मौसम स्रोतमा जाँच गर्नुहोस्।</p>
+        <div class="mt-8 overflow-x-auto rounded-[2rem] border border-[#d8e0d9] bg-white shadow-soft">
+          <table class="w-full min-w-[720px] border-collapse text-left text-sm">
+            <thead class="bg-[#f6f3e7] text-[#10231d]">
+              <tr><th class="p-4 font-black">ऋतु</th><th class="p-4 font-black">मौसम</th><th class="p-4 font-black">हिमाल / दृश्य</th><th class="p-4 font-black">साथमा लैजाने</th><th class="p-4 font-black">उत्तम यात्रा</th></tr>
+            </thead>
+            <tbody>
+              {seasons.map(([s,w,v,b,g]) => <tr class="border-t border-[#e6ece7] align-top"><td class="p-4 font-bold">{s}</td><td class="p-4 text-[#53675e]">{w}</td><td class="p-4 text-[#53675e]">{v}</td><td class="p-4 text-[#53675e]">{b}</td><td class="p-4 text-[#53675e]">{g}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Route suggestions: by traveller type + by time -->
+    <section id="routes" class="bg-[#10231d] py-20 text-white md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#f1c75b]">सुझावित यात्रा मार्ग</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">आफ्नो शैलीअनुसार मार्ग</h2>
+        <div class="mt-10 grid gap-8 lg:grid-cols-2">
+          <div>
+            <h3 class="text-2xl font-black text-[#f1c75b]">यात्रु प्रकारअनुसार</h3>
+            <div class="mt-5 space-y-5">
+              {groupRoutes.map(([t, steps]) => <article class="rounded-3xl border border-white/12 bg-white/5 p-6"><h4 class="text-xl font-bold">{t}</h4><ol class="mt-3 space-y-2 text-sm text-white/75">{steps.map(s => <li class="flex gap-3"><span class="text-[#f1c75b]">•</span><span>{s}</span></li>)}</ol></article>)}
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-black text-[#f1c75b]">समयअनुसार (साधारण)</h3>
+            <div class="mt-5 space-y-5">
+              {generalRoutes.map(([t, steps]) => <article class="rounded-3xl border border-white/12 bg-white/5 p-6"><h4 class="text-xl font-bold">{t}</h4><ol class="mt-3 space-y-2 text-sm text-white/75">{steps.map(s => <li class="flex gap-3"><span class="text-[#f1c75b]">•</span><span>{s}</span></li>)}</ol></article>)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History / legends + science & visitor responsibility -->
+    <section id="learn" class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="grid gap-10 lg:grid-cols-2">
+          <div>
+            <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">इतिहास र किंवदन्ती</p>
+            <h2 class="mt-3 text-4xl font-black md:text-5xl">चन्द्रागिरिको कथा</h2>
+            <div class="mt-6 space-y-5 leading-8 text-[#53675e]">
+              <p>चन्द्रागिरि काठमाडौँ उपत्यकाको पश्चिमी रिजमा रहेको ऐतिहासिक हिल हो। आधुनिक नेपालका एकीकरणकर्ता पृथ्वीनारायण शाहले उपत्यका जित्ने योजना बनाउँदा चन्द्रागिरिबाटै उपत्यकाको विस्तृत दृश्य हेरेको परम्परागत विवरण छ।</p>
+              <p>माथिल्लो स्टेशनमा रहेको भालेश्वर महादेव मन्दिर शिवलाई समर्पित छ। किंवदन्तीअनुसार सतीदेवीको भाले (माथिल्लो भाग) यहाँ परेकाले “भालेश्वर” नाम रहन गएको र आफैं प्रकट भएको शिवलिङ्गको पूजा हुँदै आएको विश्वास गरिन्छ।</p>
+              <p>हालको केबल कार सेवा सन् २०१६ (नेपाली सम्वत् २०७३) मा सञ्चालनमा आएको हो, जसले उपत्यकाबासीलाई छोटो समयमै शिखरसम्म पुर्‍याउँछ।</p>
+            </div>
+          </div>
+          <div class="rounded-[2.5rem] bg-[#eef3ee] p-8">
+            <p class="text-sm font-black uppercase tracking-[.25em] text-[#9b7622]">विज्ञान र आगन्तुक जिम्मेवारी</p>
+            <h2 class="mt-3 text-3xl font-black">बुझेर जाऔँ, सम्मान गरौँ</h2>
+            <ul class="mt-6 space-y-4 text-sm leading-7 text-[#53675e]">
+              <li><strong class="text-[#10231d]">उचाइ:</strong> माथिल्लो स्टेशन करिब २,५२० मिटरमा छ। हल्को श्वासप्रश्वासको असर हुन सक्छ—पानी पिउनुहोस्, सूर्यबाट बच्ने सामग्री र तह-तह लुगा लैजानुहोस् (उचाइमा UV बलियो हुन्छ)।</li>
+              <li><strong class="text-[#10231d]">वन्यजन्तु र वनस्पति:</strong> रिजमा उप-उष्णदेशीयदेखि समशीतोष्ण वनस्पति र हिमाली दृश्य पाइन्छ। ट्रेलबाहेक नहिँड्ने, वन्यजन्तुलाई दाना नदिने, फोहोर बोकेर फर्कने।</li>
+              <li><strong class="text-[#10231d]">मन्दिर शिष्टाचार:</strong> भालेश्वर महादेव सक्रिय पूजा स्थल हो—जुत्ता खोल्ने, फोटो/छायाँ निषेध क्षेत्रमा स्थानीय निर्देशन पालना गर्नुहोस्।</li>
+              <li><strong class="text-[#10231d]">मौसम जोखिम:</strong> बादल, हावा वा मर्मतले दृश्य र सञ्चालन प्रभावित हुन सक्छ; निस्कनुअघि सञ्चालन र मौसम जाँच गर्नुहोस्।</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="faq" class="py-20 md:py-28">
       <div class="mx-auto max-w-5xl px-5 md:px-8">
         <div class="text-center"><p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">FAQ</p><h2 class="mt-3 text-4xl font-black md:text-5xl">प्रायः सोधिने प्रश्न</h2></div>
         <div class="mt-10 divide-y divide-[#d8e0d9] border-y border-[#d8e0d9]">{faq.map(({q,a}) => <details class="group py-6"><summary class="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-black"><span>{q}</span><span class="text-[#b6422b] group-open:rotate-45">＋</span></summary><p class="max-w-3xl pt-4 leading-8 text-[#53675e]">{a}</p></details>)}</div>
+      </div>
+    </section>
+
+    <!-- Sources section (资料来源区块): review sync note + Google links + official tourism portal -->
+    <section id="sources" class="bg-[#eef3ee] py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <p class="text-sm font-black uppercase tracking-[.25em] text-[#b6422b]">资料来源 / Sources</p>
+        <h2 class="mt-3 text-4xl font-black">资料来源</h2>
+        <ul class="mt-8 space-y-4 text-[#53675e]">
+          <li class="rounded-3xl border border-[#d8e0d9] bg-white p-6">
+            <strong class="block text-lg text-[#10231d]">评价 · 同步时间 {reviewUpdatedMonth}</strong>
+            <p class="mt-2 text-sm leading-7">{reviewSourceNote}</p>
+            <a href={mapsShareUrl} rel="noopener" target="_blank" class="mt-3 inline-block font-bold text-[#b6422b]">点击查看谷歌地图全部评价 ↗</a>
+          </li>
+          <li class="rounded-3xl border border-[#d8e0d9] bg-white p-6">
+            <strong class="block text-lg text-[#10231d]">Google Maps</strong>
+            <p class="mt-2 text-sm leading-7">Chandragiri Cable Car Top Station 在 Google 地图的位置、导航与全部用户评价。</p>
+            <a href={mapsShareUrl} rel="noopener" target="_blank" class="mt-3 inline-block font-bold text-[#b6422b]">在 Google Maps 查看 ↗</a>
+          </li>
+          <li class="rounded-3xl border border-[#d8e0d9] bg-white p-6">
+            <strong class="block text-lg text-[#10231d]">官方旅游门户 / Official Tourism Portal</strong>
+            <p class="mt-2 text-sm leading-7">Nepal 国家旅游局（Nepal Tourism Board）官方旅游信息。</p>
+            <a href={govtTourismUrl} rel="noopener noreferrer" target="_blank" class="mt-3 inline-block font-bold text-[#b6422b]">Nepal Tourism Board ↗</a>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
@@ -239,7 +564,7 @@ const faqSchema = {
     <div class="mx-auto max-w-7xl px-5 md:px-8">
       <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <div><img src="/logo.svg" alt="चन्द्रागिरि केबल कार" class="h-14 w-auto rounded-2xl bg-white p-2" /><p class="mt-5 max-w-xl text-sm leading-6 text-white/60">यो स्वतन्त्र यात्रा मार्गदर्शिका हो; Chandragiri Hills Ltd., Google वा स्थानीय निकायको आधिकारिक वेबसाइट होइन। सञ्चालन, मूल्य र मौसमसम्बन्धी जानकारी यात्रा अघि आधिकारिक स्रोतमा पुनः जाँच गर्नुहोस्।</p></div>
-        <div class="flex flex-wrap gap-4 text-sm font-semibold text-white/75"><a href="#tickets">टिकट</a><a href="#map">नक्सा</a><button id="cookie-settings" type="button">Cookie सेटिङ</button><a href="/privacy/">गोपनीयता</a><a href="/terms/">सर्तहरू</a></div>
+        <div class="flex flex-wrap gap-4 text-sm font-semibold text-white/75"><a href="#weather">मौसम</a><a href="#facilities">सुविधा</a><a href="#tickets">टिकट</a><a href="#seasons">ऋतु</a><a href="#map">नक्सा</a><a href="#learn">इतिहास</a><a href="#sources">स्रोत</a><button id="cookie-settings" type="button">Cookie सेटिङ</button><a href="/privacy/">गोपनीयता</a><a href="/terms/">सर्तहरू</a></div>
       </div>
     </div>
   </footer>

@@ -11,7 +11,7 @@ Astro + Tailwind CSS + TypeScript 单景点站，目标部署 Cloudflare Workers
 
 ## 域名只配置一处
 
-在构建环境中设置 `SITE_URL`，例如生产域名。`astro.config.mjs` 将其作为 Astro `site`；未设置时不会写入占位域名，sitemap 集成也不会启用。
+`astro.config.mjs` 的 Astro `site` 默认硬编码为 `https://chandragiritop.com`，因此 canonical、绝对 OG URL 与 sitemap 会默认产出。如需覆盖（例如预览域名），可在构建时设置 `SITE_URL`：
 
 ```bash
 SITE_URL="https://你的真实域名" pnpm build

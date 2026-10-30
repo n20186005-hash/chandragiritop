@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
-    "build": "astro build",
+    "build": "astro build && node scripts/sanitize-build.mjs",
     "preview": "astro preview",
     "deploy": "pnpm build && wrangler deploy"
   },
@@ -25,11 +25,5 @@
     "@astrojs/check": "0.9.10",
     "typescript": "6.0.3",
     "wrangler": "4.133.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "workerd"
-    ]
   }
 }

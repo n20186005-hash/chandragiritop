@@ -1,11 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "chandragiri-cable-car-top-station",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "name": "chandragiritop",
+  "main": "./src/worker.ts",
   "compatibility_date": "2026-09-17",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist/client"
+    "directory": "./dist/client",
+    "run_worker_first": true
   }
 }

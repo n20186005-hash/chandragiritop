@@ -1,20 +1,5 @@
-# Build verification status
+# Build evidence scope
 
-The project source and configuration have been prepared for the requested Astro / Tailwind / TypeScript / Cloudflare Workers stack.
+The original exact baseline has a successful historical Cloudflare frozen install/build/deployment under Node24.21.0, pnpm12.4.2 and Wrangler4.133.0. Earlier authoring-network limitations are historical and are not treated as current build failures.
 
-## Required clean-environment command
-
-```bash
-rm -rf node_modules
-CI=1 corepack pnpm install --frozen-lockfile
-pnpm check
-pnpm build
-```
-
-## Current execution environment limitation
-
-The supplied execution container cannot establish an outbound HTTPS connection to `registry.npmjs.org`, so Corepack cannot download pnpm and dependencies cannot be installed here. Because of that network-level limitation, the three required package-manager/build commands could not be truthfully reported as passed in this environment.
-
-The included `pnpm-lock.yaml` records the exact direct dependency versions but could not be regenerated/validated against the registry in this blocked environment. Before production deployment, regenerate the lockfile once in a normal networked environment and rerun `./self-check.sh`; commit the resulting full lockfile.
-
-This note is included to avoid presenting an unexecuted CI check as successful.
+Current local validation uses the same runtime and exact dependencies/lock. See self-check.sh for reproducible install/check/native SSR build and generated-entry/binding/output checks. Default Wrangler dry-run/dev are additional native checks; browser and formal production release acceptance remain independent gates. No deployment is performed by the local authoring workflow.

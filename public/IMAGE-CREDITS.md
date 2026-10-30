@@ -1,9 +1,8 @@
-# तस्बिर श्रेय
+# Current illustration
 
-यस साइटका फोटोहरू स्थानीय रूपमा राखिएका छन्।
+`/images/chandragiri-concept.svg` and its derived `/images/chandragiri-social.jpg` were created for this independent guide on2026-10-29 and released under CC0 1.0:
+https://creativecommons.org/publicdomain/zero/1.0/
 
-- `hero-chandragiri.jpg` — Wikimedia Commons, “View from chandragiri 32.jpg”, Roman Raghu Shrestha, Creative Commons license. Source: https://commons.wikimedia.org/wiki/File:View_from_chandragiri_32.jpg
-- `cable-car-ridge.jpg` — Chandragiri Hills official website photograph, used as factual destination imagery. Source: https://www.chandragirihills.com/
-- `bhaleshwor-temple.jpg` — Big Sky Treks destination photograph of Bhaleshwor Mahadev Temple. Source: https://bigskytreks.weebly.com/chandragiri-day-hike.html
+Generic cable-car/hill geometry is a conceptual illustration, not a photograph, actual station design, route map, surveyed elevation or current-condition record. Visible scope/licence information is at /#image-credits.
 
-Before commercial republication, verify each source's current license/usage terms and replace any image if your intended use requires a different license.
+The former Wikimedia/operator/travel-blog photo hotlinks are no longer delivered. Removing those uses does not grant or clear their photography, architecture, artwork or personality rights. No reuse permission is asserted for the retired operator/blog images.

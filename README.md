@@ -1,39 +1,19 @@
-# चन्द्रागिरि केबल कार माथिल्लो स्टेसन
+# Chandragiri Cable Car Top Station independent guide
 
-Astro + Tailwind CSS + TypeScript 单景点站，目标部署 Cloudflare Workers。
+Existing architecture: Nepali-led Astro SSR homepage with English FAQ/summary, prerendered privacy/terms, Cloudflare adapter and original SESSION/IMAGES/ASSETS bindings. No independent English route or false hreflang is invented.
 
-## 环境
+Use Node24.21.0 and pnpm12.4.2. App/deployment dependency versions and pnpm lock remain the original exact versions. `pnpm-workspace.yaml` permits only the four existing locked esbuild/workerd versions and retains existing minimum-release-age exceptions.
 
-- Node.js 24.21.0（`.node-version` / `engines`）
-- pnpm 12.4.2（`packageManager`）
-- Astro 7.3.3
-- TypeScript 6.0.3（避免 TypeScript 7 与 `astro check` 当前不兼容）
+Run `bash self-check.sh`, then default `npx wrangler deploy --dry-run` (the existing local Wrangler4.133.0). Preview the native generated output with `npx wrangler dev --port 8943`; no deployment is part of dev/dry-run. The actual project name is chandragiritop and compatibility date2026-09-17 is unchanged. No domain binding was added.
 
-## 域名只配置一处
+The configured custom source entry imports the existing adapter handler, performs public HTTP/www canonical guards before it, and is compiled by the adapter into dist/server/entry.mjs. Default Wrangler follows generated .wrangler/deploy/config.json to that entry. Keep the generated SESSION/IMAGES/ASSETS configuration intact. Build sanitization removes local source paths only from compiled text, not generated Wrangler configuration needed by deployment.
 
-`astro.config.mjs` 的 Astro `site` 默认硬编码为 `https://chandragiritop.com`，因此 canonical、绝对 OG URL 与 sitemap 会默认产出。如需覆盖（例如预览域名），可在构建时设置 `SITE_URL`：
+Reviewed facts are in src/data/guide.ts with operator URLs and2026-10-29review date. Operator FAQ and CableCar page times/lunch breaks conflict; visible tables attribute both rather than selecting a current last service. Last ticket/ascent/descent remain confirmation questions. Operator fares preserve category, currency and direction; no final checkout or same-day service is claimed. Maps is a dated manual snapshot, not site-collected or automatically synchronized reviews. Top Station is distinct from Thankot-side boarding and the resort/temple.
 
-```bash
-SITE_URL="https://你的真实域名" pnpm build
-```
+The three previous unverified external photo uses have been replaced by original CC0 conceptual SVG/JPEG, visibly labelled as not a photograph/map/current condition. Their removal does not clear former subject or photography rights.
 
-## 安装、自检、构建
+Regional weather remains server-fetched SSR data with a same-origin JSON refresh endpoint, strict time/finite/range checks, fifteen-minute cache and explicit error clearing. The browser does not directly contact the weather provider or request device location. Model hazards are separate from probability and do not assert cable operations or safe shelter.
 
-```bash
-rm -rf node_modules
-CI=1 corepack pnpm install --frozen-lockfile
-pnpm check
-pnpm build
-```
+The original optional GA4 consent key/yes-no choices are preserved, with storage-failure protection and withdrawal disable/cookie cleanup/reload. Historical data already transmitted cannot be recalled. Hosting Cloudflare connection/security and possible independent Web Analytics are disclosed separately with no fictitious switch. Local tests cannot establish legal compliance or production browser behaviour.
 
-## Cloudflare Workers
-
-```bash
-pnpm deploy
-```
-
-`wrangler.jsonc` 已提供 Worker 基础配置。
-
-## 照片
-
-页面使用真实的 Chandragiri 实景照片。当前源码保留权威/实景来源 URL，便于版权核验。若希望完全离线，请在有网络的构建环境中下载为 `public/images/` 本地文件并相应替换 `src/pages/index.astro` 的三个图片 URL；来源记录见 `public/IMAGE-CREDITS.md`。
+Local candidate status is not formal production acceptance. Independent browser layouts/interactions and official exact-commit Cloudflare/live-domain/runtime checks remain required.

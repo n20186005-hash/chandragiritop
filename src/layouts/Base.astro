@@ -62,11 +62,13 @@ const UI: Record<Lang, Ui> = {
     navAria: 'Page sections',
     nav: [
       { href: '/', label: 'Home' },
-      { href: '/#plan', label: 'Top vs base station' },
-      { href: '/#timings', label: 'Timings' },
+      { href: '/#plan', label: 'Top vs base' },
+      { href: '/#timings', label: 'Timings & last ride' },
       { href: '/#tickets', label: 'Tickets' },
-      { href: '/#guides', label: 'All guides' },
+      { href: '/#contact', label: 'Contact' },
       { href: '/#map', label: 'Map' },
+      { href: '/#weather', label: 'Weather' },
+      { href: '/#guides', label: 'All guides' },
       { href: '/#faq', label: 'FAQ' },
       { href: '/#sources', label: 'Sources' }
     ],
@@ -113,12 +115,9 @@ const ui = UI[lang];
   <header>
     <div class="shell header-shell">
       <a href="/" class="brand"><img src="/logo.svg" width="240" height="64" alt={ui.brandAlt} /></a>
-      <details class="menu">
-        <summary>{ui.menu}</summary>
-        <nav aria-label={ui.navAria}>
-          {ui.nav.map((item) => <a href={item.href}>{item.label}</a>)}
-        </nav>
-      </details>
+      <nav class="topnav" aria-label={ui.navAria}>
+        {ui.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
       <a class="contact-link" href="/#contact">{ui.contact}</a>
     </div>
   </header>

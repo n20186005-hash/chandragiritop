@@ -10,7 +10,7 @@ export default defineConfig({
   trailingSlash: 'always',
   output: 'server',
   adapter: cloudflare({ configPath: 'wrangler.jsonc', prerenderEnvironment: 'node' }),
-  integrations: site ? [sitemap({ customPages: ['https://chandragiritop.com/'], filter: (page) => !/(?:privacy|terms|404|api)(?:\/|\.html|$)/.test(page) })] : [],
+  integrations: site ? [sitemap({ customPages: ['https://chandragiritop.com/'], filter: (page) => !/(?:privacy|terms|cookie-settings|404|api)(?:\/|\.html|$)/.test(page) })] : [],
   vite: {
     plugins: [tailwindcss()]
   }

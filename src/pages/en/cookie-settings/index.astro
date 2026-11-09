@@ -1,0 +1,23 @@
+---
+import Base from '../../../layouts/Base.astro';
+export const prerender = true;
+---
+<Base title="Cookie settings | Chandragiri guide" description="Cookie categories: necessary, optional analytics and third-party; change your Google Analytics choice." noindex lang="en">
+  <section class="section"><div class="shell prose">
+    <h1>Cookie settings</h1>
+    <p>Manage your cookie preferences here. Necessary cookies are always active; analytics cookies load only after you consent.</p>
+
+    <h2>Necessary cookies</h2>
+    <p><strong>Always active.</strong> Required for basic site functions (language preference, storing your choice, security); cannot be turned off.</p>
+
+    <h2>Optional analytics cookies</h2>
+    <p>Google Analytics (third party) loads only after you accept and measures visits, page views and browser/device. This is separate from independent Cloudflare hosting measurement.</p>
+
+    <h2>Third-party and marketing cookies</h2>
+    <p>This site does not use its own marketing or advertising cookies. However, opening the map, tickets or other external links is subject to that provider's cookies and terms.</p>
+
+    <h2>Changing your choice</h2>
+    <p>Your choice is stored in the browser's localStorage. Open the choice with the button below, then accept or reject; if analytics was already loaded it is disabled and, once the choice is saved, the page reloads to apply. If the browser does not allow storing the choice, check the site data settings.</p>
+    <p><button type="button" data-cookie-settings>Open choices</button></p>
+  </div></section>
+</Base>

@@ -49,7 +49,7 @@ const UI: Record<Lang, Ui> = {
     footerStatement: 'स्वतन्त्र, गैरआधिकारिक, गैरनाफामूलक पर्यटन तथा शैक्षिक जानकारी गाइड। यो Chandragiri Hills, केबल कार सञ्चालक, मन्दिर वा रिसोर्टको आधिकारिक साइट होइन।',
     footerPrivacy: 'गोपनीयता',
     footerTerms: 'प्रयोग सर्तहरू',
-    cookieSettings: 'Google Analytics रोजाइ बदल्नुहोस्',
+    cookieSettings: 'कुकी सेटिङ',
     footerNote: 'वैकल्पिक Google Analytics र स्वतन्त्र Cloudflare होस्टिङ मापनको दायरा गोपनीयता पानामा छ।'
   },
   en: {
@@ -76,7 +76,7 @@ const UI: Record<Lang, Ui> = {
     footerStatement: 'An independent, unofficial, non-profit travel and educational guide. This is not the official website of Chandragiri Hills, the cable car operator, the temple or the resort.',
     footerPrivacy: 'Privacy',
     footerTerms: 'Terms of use',
-    cookieSettings: 'Change Google Analytics choice',
+    cookieSettings: 'Cookie settings',
     footerNote: 'The scope of optional Google Analytics and independent Cloudflare hosting measurement is described on the privacy page.',
     footerExtra: 'नेपाली गृहपाना'
   }
@@ -126,7 +126,7 @@ const ui = UI[lang];
     <div class="shell">
       <p>{ui.footerStatement}</p>
       <p>
-        <a href="/privacy/">{ui.footerPrivacy}</a> · <a href="/terms/">{ui.footerTerms}</a> · <button type="button" data-cookie-settings>{ui.cookieSettings}</button>
+        <a href={lang === 'en' ? '/en/privacy/' : '/privacy/'}>{ui.footerPrivacy}</a> · <a href={lang === 'en' ? '/en/terms/' : '/terms/'}>{ui.footerTerms}</a> · <a href={lang === 'en' ? '/en/cookie-settings/' : '/cookie-settings/'}>{ui.cookieSettings}</a>
         {ui.footerExtra && <> · <a href="/" lang="ne">{ui.footerExtra}</a></>}
       </p>
       <p class="small">{ui.footerNote}</p>

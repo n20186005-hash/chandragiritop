@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import {
+  CHECKED, SITE_URL, OPERATOR_LINKS, OPERATOR_PHONE, MAPS_URL,
+  TOPIC_GROUPS, PUBLISHED_TOPICS, getTopic, groupLabel, isPublished,
+  topicPath, topicUrl, publishedByGroup,
+  type Topic
+} from '../data/topics';
+
+interface Props { topic: Topic }
+const { topic } = Astro.props;
+const pageUrl = topicUrl(topic.slug);
+const groupName = groupLabel(topic.group);
+const related = topic.related.map(getTopic).filter((t): t is Topic => Boolean(t) && isPublished(t!.slug));
+const groups = TOPIC_GROUPS.map((g) => ({ ...g, items: publishedByGroup(g.id) }));
+
+const lds = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': pageUrl + '#webpage',
+    url: pageUrl,
+    name: topic.h1,
+    description: topic.description,
+    inLanguage: 'en',
+    isPartOf: { '@id': SITE_URL + '/#website' },
+    about: { '@id': SITE_URL + '/#attraction' }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+      { '@type': 'ListItem', position: 2, name: groupName, item: SITE_URL + '/#guides' },
+      { '@type': 'ListItem', position: 3, name: topic.h1, item: pageUrl }
+    ]
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': pageUrl + '#faq',
+    mainEntity: topic.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a }
+    }))
+  }
+];
+---
+<Base lang="en" title={topic.title} description={topic.description}>
+  <Fragment slot="head">{lds.map((x) => <script type="application/ld+json" is:inline set:html={JSON.stringify(x)} />)}</Fragment>
+
+  <section class="hero section">
+    <div class="shell">
+      <p class="kicker">Chandragiri · {groupName} · Nepal</p>
+      <h1>{topic.h1}</h1>
+      <p class="lead">{topic.lead}</p>
+      <p><a class="button" href="#faq">Questions answered</a> <a class="button secondary" href="/#guides">All guides</a></p>
+      <p class="badge">Guide checked {CHECKED} · operator information, not a live feed</p>
+      {topic.image && (
+        <figure>
+          <img src={topic.image.src} width="1280" height="960" alt={topic.image.alt} loading="lazy" />
+          <figcaption>{topic.image.caption}</figcaption>
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <div class="shell content">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> › <a href="/#guides">{groupName}</a> › <span aria-current="page">{topic.h1}</span>
+    </nav>
+
+    <section id="intro" class="section">
+      <h2>What this page answers</h2>
+      <p>{topic.intro}</p>
+    </section>
+
+    <section id="quick-facts" class="section">
+      <h2>Quick facts</h2>
+      <div class="weather-grid">
+        {topic.highlights.map((h) => <div class="card"><p>{h}</p></div>)}
+      </div>
+    </section>
+
+    {topic.sections.map((s, i) => (
+      <section id={`section-${i + 1}`} class="section">
+        <h2>{s.heading}</h2>
+        {s.paragraphs && s.paragraphs.map((p) => <p>{p}</p>)}
+        {s.bullets && <ul>{s.bullets.map((b) => <li>{b}</li>)}</ul>}
+        {s.callout && <p class="card"><strong>Worth checking:</strong> {s.callout}</p>}
+      </section>
+    ))}
+
+    <section id="faq" class="section">
+      <h2>Frequently asked questions</h2>
+      {topic.faqs.map((f) => (
+        <details class="card faq"><summary>{f.q}</summary><p>{f.a}</p></details>
+      ))}
+    </section>
+
+    <section id="sources" class="section">
+      <h2>Sources and verification limits</h2>
+      <p>Operator information was checked on {CHECKED}. Fares, opening times, breaks, last-ride cut-offs, activity prices and facility opening status can change; confirm them with the operator before travelling. The Google Maps rating snapshot shown on the homepage is a manual third-party snapshot, not a review collected by this guide, and it is not included in this page's structured data.</p>
+      <p>Cable car contact published by the operator: <a href="tel:+9779802069900">{OPERATOR_PHONE}</a>.</p>
+      <ul>{OPERATOR_LINKS.map((s) => <li><a href={s.url}>{s.label}</a></li>)}</ul>
+      <p><a href={MAPS_URL}>Google Maps location reference</a> · <a href="/">Independent Nepali-language homepage</a></p>
+    </section>
+
+    <section id="related" class="section">
+      <h2>Related reading</h2>
+      <div class="weather-grid">
+        {related.map((r) => (
+          <a class="card topic-card" href={topicPath(r.slug)}>
+            <strong>{r.h1}</strong>
+            <p class="small">{groupLabel(r.group)}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="all-guides" class="section">
+      <h2>Browse all Chandragiri guides</h2>
+      <details class="card">
+        <summary>Show all {PUBLISHED_TOPICS.length} topic guides by category</summary>
+        {groups.map((g) => (
+          <div class="guide-group">
+            <h3>{g.label}</h3>
+            <ul class="guide-links">
+              {g.items.map((t) => <li><a href={topicPath(t.slug)}>{t.h1}</a></li>)}
+            </ul>
+          </div>
+        ))}
+      </details>
+    </section>
+
+    <section class="section">
+      <p class="small">This is an independent, unofficial, non-profit visitor guide. It is not operated by Chandragiri Hills, the cable car operator, the temple or the resort, and it does not sell tickets or take bookings. Road arrivals board at the Thankot-side Bottom Station; the Top Station Maps point is not a verified boarding or parking address.</p>
+    </section>
+  </div>
+</Base>

@@ -36,7 +36,7 @@ export const sections=[
  'पहाडी भूभागले हावा माथि उठ्दा बादल बन्न मद्दत गर्न सक्छ; रिज र उपत्यकाको अवस्था फरक हुन सक्छ। तलको प्रादेशिक मोडेलले सम्पूर्ण केबल लाइनको हावा, टावरको अवस्था वा सञ्चालनको सुरक्षा अनुमति दिन सक्दैन। चिसो र पानीको तयारी गर्नुहोस् र चेतावनीमा कर्मचारीको निर्देशन मान्नुहोस्।'
  ]},
  {id:'reviews',title:'Google Maps को मिति-झलक',text:[
- '४.५ / ५ · १०,३२५ समीक्षा। Google Maps मा २०२६-१०-२९ मा हातैले जाँचिएको झलक हो; स्वतः अद्यावधिक हुँदैन र यस गाइडले सङ्कलन गरेको समीक्षा होइन। मूल लेखक र Google का अधिकार कायम छन्; हालको जानकारीका लागि मूल पाना खोल्नुहोस्।'
+ '४.५ / ५ · १०,३३० समीक्षा। Google Maps मा २०२६-१०-२९ मा हातैले जाँचिएको झलक हो; स्वतः अद्यावधिक हुँदैन र यस गाइडले सङ्कलन गरेको समीक्षा होइन। मूल लेखक र Google का अधिकार कायम छन्; हालको जानकारीका लागि मूल पाना खोल्नुहोस्।'
  ]}
 ] as const;
 export const faq=[
@@ -45,7 +45,7 @@ export const faq=[
  {q:'टिकटको मूल्य र मुद्रा कसरी हेर्ने?',a:'२०२६-१०-२९ मा Cable Car पानाले नेपाली/SAARC/विदेशी श्रेणीका लागि फरक NPR/INR/USD दर र One Way, Two Way तथा Express श्रेणी देखाएको थियो। यो स्रोतको मिति-झलक हो; पात्रता, परिचयपत्र र अन्तिम रकम आधिकारिक टिकट सेवामा जाँच्नुहोस्।',lang:'ne'},
  {q:'केबल कार यात्रा कति समय लाग्छ?',a:'सञ्चालकले करिब २.५ किमि लाइन र करिब १० मिनेट सवारी समय वर्णन गर्छ। पर्खाइ, टिकट जाँच, ब्रेक वा मौसमको समय यसमा गनिएको वा ग्यारेन्टी गरिएको छैन।',lang:'ne'},
  {q:'ह्वीलचेयर र बच्चाका लागि के पुष्टि गर्ने?',a:'सञ्चालकले चढ्न/ओर्लन सहायता तथा ११ वर्ष वा कम उमेरका बच्चासँग कम्तीमा १५ वर्षको सहयात्रीको नियम बताउँछ। यो सम्पूर्ण माथिल्लो परिसरको अवरोधरहित पहुँच प्रमाण होइन; आफ्नो मार्ग र सहायता पहिले पुष्टि गर्नुहोस्।',lang:'ne'},
- {q:'फोटो अहिलेको स्टेशनको हो?',a:'हाल प्रयोग गरिएको दृश्य मौलिक सांकेतिक चित्र हो, वास्तविक स्टेशनको फोटो वा सटीक नक्सा होइन। यसले आजको दृश्य वा सञ्चालन पुष्टि गर्दैन।',lang:'ne'},
+ {q:'फोटो अहिलेको स्टेशनको हो?',a:'हिरोमा राखिएको तस्बिर २०१६ मा खिचिएको वास्तविक फोटो हो र हालको सञ्चालन अवस्था पुष्टि गर्दैन; अन्य मौलिक सांकेतिक SVG चित्रहरू CC0 अन्तर्गत छन् र वास्तविक स्टेशन वा मार्गको नक्सा होइनन्। कुनै पनि चित्रले आजको टिकट, समय वा सेवा प्रमाणित गर्दैन।',lang:'ne'},
  {q:'Where do I board for Chandragiri Top Station?',a:'Boarding by road is at the Thankot-side Bottom Station. The Top Station is the hill destination; its Maps reference is not a verified parking, pickup or ticket-counter location.',lang:'en'},
  {q:'What is the last cable car down?',a:'No current last-descent time was independently confirmed. The operator FAQ and Cable Car pages conflict on closing and lunch breaks. Ask the cable-car operator at +977-9802069900 about ticket cutoff, last ascent and last descent separately.',lang:'en'},
  {q:'Are the listed fares final and in one currency?',a:'No. The operator listing checked on 2026-10-29 separates Nepalese/SAARC/other-foreign categories and NPR/INR/USD currencies, and one-way, return and express products. Confirm eligibility, date, documents and final checkout directly.',lang:'en'},

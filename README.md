@@ -1,6 +1,6 @@
 # Chandragiri Cable Car Top Station independent guide
 
-Existing architecture: Nepali-led Astro SSR homepage with English FAQ/summary, prerendered privacy/terms, Cloudflare adapter and original SESSION/IMAGES/ASSETS bindings. No independent English route or false hreflang is invented.
+Existing architecture: Nepali-led Astro SSR homepage with English FAQ/summary, 36 prerendered English topic guides at `/<slug>/`, prerendered privacy/terms, Cloudflare adapter and original SESSION/IMAGES/ASSETS bindings. Each topic page declares lang="en" and a self canonical. No false hreflang is invented: there is one URL set, not paired ne/en routes.
 
 Use Node24.21.0 and pnpm12.4.2. App/deployment dependency versions and pnpm lock remain the original exact versions. `pnpm-workspace.yaml` permits only the four existing locked esbuild/workerd versions and retains existing minimum-release-age exceptions.
 
@@ -17,3 +17,5 @@ Regional weather remains server-fetched SSR data with a same-origin JSON refresh
 The original optional GA4 consent key/yes-no choices are preserved, with storage-failure protection and withdrawal disable/cookie cleanup/reload. Historical data already transmitted cannot be recalled. Hosting Cloudflare connection/security and possible independent Web Analytics are disclosed separately with no fictitious switch. Local tests cannot establish legal compliance or production browser behaviour.
 
 Local candidate status is not formal production acceptance. Independent browser layouts/interactions and official exact-commit Cloudflare/live-domain/runtime checks remain required.
+
+Topic guides: `src/data/topics.ts` is the registry (36 slugs, content in `topics.p0.ts` / `topics.p1.ts` / `topics.p2.ts`, slug order in `src/data/topic-slugs.json`). Topic routes are `prerender=true` and join the sitemap automatically; the SSR homepage is listed through sitemap `customPages`. `trailingSlash: 'always'` plus the worker's slash redirect keep one canonical per page. Run `node scripts/check-topics.mjs` for content and internal-link integrity, and `scripts/check-output.mjs` after build for sitemap and per-page SEO checks. P0 covers fares, hours, last ride, the two stations and Kathmandu/Thankot access; P1 covers the ride, accessibility, transport options, hilltop facilities and the half-day route; P2 covers seasonal, family, nearby, food and stay decisions. To publish in stages, set `PUBLISHED_PRIORITIES` in `src/data/topics.ts` to `["P0"]` or `["P0", "P1"]`; routes, homepage links, related links, the guide directory and sitemap expectations follow that list.

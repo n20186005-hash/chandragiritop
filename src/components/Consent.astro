@@ -1,4 +1,25 @@
-<div id="cookie-banner" class="consent" hidden role="region" aria-label="वैकल्पिक विश्लेषण रोजाइ"><p><strong>Google Analytics रोजाइ</strong></p><p>सहमत भएपछि मात्र वैकल्पिक Google Analytics लोड हुन्छ। Cloudflare को स्वतन्त्र होस्टिङ मापन यो रोजाइले नियन्त्रण गर्दैन। <a href="/privacy/">गोपनीयता पढ्नुहोस्</a></p><p id="cookie-error" hidden>ब्राउजरले रोजाइ सुरक्षित गर्न सकेन। यही पानामा विश्लेषण रोकिएको छ; पुरानो रोजाइ बदल्न ब्राउजरको साइट डेटा पनि जाँच्नुहोस्।</p><div class="actions"><button id="cookie-accept" type="button">स्वीकार</button><button id="cookie-reject" type="button">अस्वीकार / सहमति फिर्ता</button></div></div>
+---
+interface Props { lang?: 'ne' | 'en' }
+const { lang = 'ne' } = Astro.props;
+const C = lang === 'en' ? {
+  aria: 'Optional analytics choice',
+  title: 'Google Analytics choice',
+  body: 'Optional Google Analytics loads only after you agree. This choice does not control independent Cloudflare hosting measurement.',
+  privacy: 'Read the privacy page',
+  error: 'The browser could not save your choice. Analytics is stopped on this page; to change an older choice, also check the browser site data.',
+  accept: 'Accept',
+  reject: 'Reject / withdraw consent'
+} : {
+  aria: 'वैकल्पिक विश्लेषण रोजाइ',
+  title: 'Google Analytics रोजाइ',
+  body: 'सहमत भएपछि मात्र वैकल्पिक Google Analytics लोड हुन्छ। Cloudflare को स्वतन्त्र होस्टिङ मापन यो रोजाइले नियन्त्रण गर्दैन।',
+  privacy: 'गोपनीयता पढ्नुहोस्',
+  error: 'ब्राउजरले रोजाइ सुरक्षित गर्न सकेन। यही पानामा विश्लेषण रोकिएको छ; पुरानो रोजाइ बदल्न ब्राउजरको साइट डेटा पनि जाँच्नुहोस्।',
+  accept: 'स्वीकार',
+  reject: 'अस्वीकार / सहमति फिर्ता'
+};
+---
+<div id="cookie-banner" class="consent" hidden role="region" aria-label={C.aria}><p><strong>{C.title}</strong></p><p>{C.body} <a href="/privacy/">{C.privacy}</a></p><p id="cookie-error" hidden>{C.error}</p><div class="actions"><button id="cookie-accept" type="button">{C.accept}</button><button id="cookie-reject" type="button">{C.reject}</button></div></div>
 <script is:inline>
 (()=>{const KEY='chandragiri-analytics-consent',banner=document.getElementById('cookie-banner'),error=document.getElementById('cookie-error');let loaded=false;
 const read=()=>{try{return localStorage.getItem(KEY);}catch{return null;}};const store=value=>{try{localStorage.setItem(KEY,value);return true;}catch{return false;}};

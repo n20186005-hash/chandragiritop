@@ -1,8 +1,138 @@
 ---
 import '../styles/global.css';
 import Consent from '../components/Consent.astro';
-interface Props{title:string;description:string;noindex?:boolean;}
-const {title,description,noindex=false}=Astro.props;const canonical=new URL(Astro.url.pathname,'https://chandragiritop.com').href;
-const photoAlt='चन्द्रागिरि गाइडको मौलिक सांकेतिक केबल कार चित्र; वास्तविक स्टेशन वा मार्गको नक्सा होइन';
+
+type Lang = 'ne' | 'en';
+interface Props { title: string; description: string; noindex?: boolean; lang?: Lang }
+interface NavItem { href: string; label: string }
+interface Ui {
+  htmlLang: string;
+  ogLocale: string;
+  photoAlt: string;
+  brandAlt: string;
+  skip: string;
+  menu: string;
+  navAria: string;
+  nav: NavItem[];
+  contact: string;
+  footerStatement: string;
+  footerPrivacy: string;
+  footerTerms: string;
+  cookieSettings: string;
+  footerNote: string;
+  footerExtra?: string;
+}
+
+const { title, description, noindex = false, lang = 'ne' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, 'https://chandragiritop.com').href;
+
+const UI: Record<Lang, Ui> = {
+  ne: {
+    htmlLang: 'ne',
+    ogLocale: 'ne_NP',
+    photoAlt: 'चन्द्रागिरि गाइडको मौलिक सांकेतिक केबल कार चित्र; वास्तविक स्टेशन वा मार्गको नक्सा होइन',
+    brandAlt: 'चन्द्रागिरि माथिल्लो स्टेसन गाइड',
+    skip: 'मुख्य सामग्रीमा जानुहोस्',
+    menu: 'विषय सूची ▾',
+    navAria: 'पानाका विषय',
+    nav: [
+      { href: '/#plan', label: 'माथि र तलको फरक' },
+      { href: '/#timings', label: 'समय र अन्तिम सवारी' },
+      { href: '/#tickets', label: 'टिकट' },
+      { href: '/#contact', label: 'सम्पर्क' },
+      { href: '/#map', label: 'नक्सा' },
+      { href: '/#weather', label: 'मौसम' },
+      { href: '/#faq', label: 'FAQ' },
+      { href: '/#sources', label: 'स्रोत' }
+    ],
+    contact: 'सम्पर्क',
+    footerStatement: 'स्वतन्त्र, गैरआधिकारिक, गैरनाफामूलक पर्यटन तथा शैक्षिक जानकारी गाइड। यो Chandragiri Hills, केबल कार सञ्चालक, मन्दिर वा रिसोर्टको आधिकारिक साइट होइन।',
+    footerPrivacy: 'गोपनीयता',
+    footerTerms: 'प्रयोग सर्तहरू',
+    cookieSettings: 'Google Analytics रोजाइ बदल्नुहोस्',
+    footerNote: 'वैकल्पिक Google Analytics र स्वतन्त्र Cloudflare होस्टिङ मापनको दायरा गोपनीयता पानामा छ।'
+  },
+  en: {
+    htmlLang: 'en',
+    ogLocale: 'en_US',
+    photoAlt: 'Original conceptual cable car illustration for the Chandragiri guide; not a photograph or a station or route map',
+    brandAlt: 'Chandragiri Top Station independent guide',
+    skip: 'Skip to main content',
+    menu: 'Sections ▾',
+    navAria: 'Page sections',
+    nav: [
+      { href: '/', label: 'Home' },
+      { href: '/#plan', label: 'Top vs base station' },
+      { href: '/#timings', label: 'Timings' },
+      { href: '/#tickets', label: 'Tickets' },
+      { href: '/#guides', label: 'All guides' },
+      { href: '/#map', label: 'Map' },
+      { href: '/#faq', label: 'FAQ' },
+      { href: '/#sources', label: 'Sources' }
+    ],
+    contact: 'Contact',
+    footerStatement: 'An independent, unofficial, non-profit travel and educational guide. This is not the official website of Chandragiri Hills, the cable car operator, the temple or the resort.',
+    footerPrivacy: 'Privacy',
+    footerTerms: 'Terms of use',
+    cookieSettings: 'Change Google Analytics choice',
+    footerNote: 'The scope of optional Google Analytics and independent Cloudflare hosting measurement is described on the privacy page.',
+    footerExtra: 'नेपाली गृहपाना'
+  }
+};
+const ui = UI[lang];
 ---
-<!doctype html><html lang="ne"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="robots" content={noindex?'noindex,follow':'index,follow,max-image-preview:large'}/><link rel="canonical" href={canonical}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:type" content="website"/><meta property="og:locale" content="ne_NP"/><meta property="og:image" content="https://chandragiritop.com/images/chandragiri-social.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content={photoAlt}/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content="https://chandragiritop.com/images/chandragiri-social.jpg"/><meta name="twitter:image:alt" content={photoAlt}/><link rel="icon" href="/icons/favicon.svg"/><meta name="theme-color" content="#193c31"/><slot name="head"/></head><body><a class="skip" href="#main">मुख्य सामग्रीमा जानुहोस्</a><header><div class="shell header-shell"><a href="/" class="brand"><img src="/logo.svg" width="240" height="64" alt="चन्द्रागिरि माथिल्लो स्टेसन गाइड"/></a><details class="menu"><summary>विषय सूची ▾</summary><nav aria-label="पानाका विषय"><a href="/#plan">माथि र तलको फरक</a><a href="/#timings">समय र अन्तिम सवारी</a><a href="/#tickets">टिकट</a><a href="/#contact">सम्पर्क</a><a href="/#map">नक्सा</a><a href="/#weather">मौसम</a><a href="/#faq">FAQ</a><a href="/#sources">स्रोत</a></nav></details><a class="contact-link" href="/#contact">सम्पर्क</a></div></header><main id="main"><slot/></main><footer class="section"><div class="shell"><p>स्वतन्त्र, गैरआधिकारिक, गैरनाफामूलक पर्यटन तथा शैक्षिक जानकारी गाइड। यो Chandragiri Hills, केबल कार सञ्चालक, मन्दिर वा रिसोर्टको आधिकारिक साइट होइन।</p><p><a href="/privacy/">गोपनीयता</a> · <a href="/terms/">प्रयोग सर्तहरू</a> · <button type="button" data-cookie-settings>Google Analytics रोजाइ बदल्नुहोस्</button></p><p class="small">वैकल्पिक Google Analytics र स्वतन्त्र Cloudflare होस्टिङ मापनको दायरा गोपनीयता पानामा छ।</p></div></footer><Consent/></body></html>
+<!doctype html>
+<html lang={ui.htmlLang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large'} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content={ui.ogLocale} />
+  <meta property="og:image" content="https://chandragiritop.com/images/chandragiri-social.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ui.photoAlt} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://chandragiritop.com/images/chandragiri-social.jpg" />
+  <meta name="twitter:image:alt" content={ui.photoAlt} />
+  <link rel="icon" href="/icons/favicon.svg" />
+  <meta name="theme-color" content="#193c31" />
+  <slot name="head" />
+</head>
+<body>
+  <a class="skip" href="#main">{ui.skip}</a>
+  <header>
+    <div class="shell header-shell">
+      <a href="/" class="brand"><img src="/logo.svg" width="240" height="64" alt={ui.brandAlt} /></a>
+      <details class="menu">
+        <summary>{ui.menu}</summary>
+        <nav aria-label={ui.navAria}>
+          {ui.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+      </details>
+      <a class="contact-link" href="/#contact">{ui.contact}</a>
+    </div>
+  </header>
+  <main id="main"><slot /></main>
+  <footer class="section">
+    <div class="shell">
+      <p>{ui.footerStatement}</p>
+      <p>
+        <a href="/privacy/">{ui.footerPrivacy}</a> · <a href="/terms/">{ui.footerTerms}</a> · <button type="button" data-cookie-settings>{ui.cookieSettings}</button>
+        {ui.footerExtra && <> · <a href="/" lang="ne">{ui.footerExtra}</a></>}
+      </p>
+      <p class="small">{ui.footerNote}</p>
+    </div>
+  </footer>
+  <Consent lang={lang} />
+</body>
+</html>

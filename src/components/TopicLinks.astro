@@ -1,0 +1,28 @@
+---
+import { TOPIC_GROUPS, publishedByGroup, topicPath } from '../data/topics';
+
+interface Props { lang?: 'ne' | 'en' }
+const { lang = 'ne' } = Astro.props;
+const groups = TOPIC_GROUPS.map((g) => ({ ...g, items: publishedByGroup(g.id) }));
+const heading = lang === 'en' ? 'Explore the Chandragiri guides' : 'विस्तृत गाइडहरू';
+const note = lang === 'en'
+  ? 'Separate English pages for fares, timings, the two stations, transport, hilltop facilities and trip planning.'
+  : 'टिकट, समय, स्टेसन, यातायात र माथिल्लो परिसरका छुट्टाछुट्टै अङ्ग्रेजी पानाहरू।';
+---
+<section id="guides" class="section">
+  <div class="shell">
+    <h2>{heading}</h2>
+    <p class="lead">{note}</p>
+    <div class="guide-grid">
+      {groups.map((g) => (
+        <div class="card guide-group">
+          <h3>{lang === 'en' ? g.label : g.labelNe}</h3>
+          {lang === 'en' && <p class="small">{g.blurb}</p>}
+          <ul class="guide-links">
+            {g.items.map((t) => <li><a href={topicPath(t.slug)} lang="en">{t.h1}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
